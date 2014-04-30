@@ -31,10 +31,10 @@ public class GameUI extends JFrame implements ActionListener{
     JLabel timer;
     
     public GameUI(){
-	System.out.println("GameUI - Building");
+    	System.out.println("GameUI - Building");
         
         this.initializeComponents();
-	this.setVisible(true);
+        this.setVisible(true);
         this.setSize(1200,400);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -52,8 +52,13 @@ public class GameUI extends JFrame implements ActionListener{
         
         hostLibrary = new JButton("Host \nLibrary");
         guestLibrary = new JButton("Guest \nLibrary");
-        activeCards[0] = new JButton("A1");
-        activeCards[1] = new JButton("A2");
+        
+        // How to add images to buttons
+        ImageIcon A1 = new ImageIcon("img/h4.png");
+        ImageIcon A2 = new ImageIcon("img/sa.png");
+        
+        activeCards[0] = new JButton(A1);
+        activeCards[1] = new JButton(A2);
         
         optionsPanel = new JPanel(new GridLayout(1,7));
         hostPanel = new JPanel(new GridLayout(1,7));

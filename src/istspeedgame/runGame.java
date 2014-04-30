@@ -13,7 +13,9 @@ package istspeedgame;
 public class runGame {	
     
     public static void main(String[] args) {
-	MainMenuUI menu = new MainMenuUI();
+    	Deck d = new Deck();
+    	d.Shuffle();
+    	MainMenuUI menu = new MainMenuUI();
     } // main
     
 } // runGame
