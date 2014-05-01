@@ -7,6 +7,10 @@ public class Deck {
 	String [] suits  = {"s","c","h","d"};
 	String [] values = {"2","3","4","5","6","7","8","9","10","j","q","k","a"};
 	Card [] cards = new Card[52];
+	Card [] tabledeckLeft= new Card[5];
+	Card [] tabledeckRight = new Card[5];
+	Card [] playerDeckA = new Card[21];
+	Card [] playerDeckB = new Card[21];
 	
 	LinkedList<Card> deck = new LinkedList<Card>();
 	
