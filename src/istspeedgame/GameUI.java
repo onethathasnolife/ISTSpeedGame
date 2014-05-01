@@ -58,8 +58,8 @@ public class GameUI extends JFrame implements ActionListener{
         Deck d = new Deck();
         d.Shuffle();
         // How to add images to buttons
-        ImageIcon A1 = new ImageIcon("img/" + d.getCard(0) + ".png");
-        ImageIcon A2 = new ImageIcon("img/" + d.getCard(1) + ".png");
+        ImageIcon A1 = new ImageIcon("img/" + d.getCard(0).toString() + ".png");
+        ImageIcon A2 = new ImageIcon("img/" + d.getCard(1).toString() + ".png");
         
         activeCards[0] = new JButton(A1);
         activeCards[1] = new JButton(A2);

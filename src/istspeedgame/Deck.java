@@ -8,15 +8,15 @@ public class Deck {
 	String [] values = {"2","3","4","5","6","7","8","9","10","j","q","k","a"};
 	Card [] cards = new Card[52];
 	
-	LinkedList<String> deck = new LinkedList<String>();
+	LinkedList<Card> deck = new LinkedList<Card>();
 	
 	public Deck() {
 		int counter = 0;
 		
 		for (int i = 0; i <= 3; i++) {
 			for (int j = 0; j <= 12; j++) {
-				cards[counter] = new Card(suits[i], values[j], j+1);
-				deck.add(cards[counter].getCard());
+				cards[counter] = new Card(suits[i], values[j], j+2);
+				deck.add(cards[counter]);
 				counter++;
 			}
 		}
@@ -24,17 +24,13 @@ public class Deck {
 	
 	public void Shuffle() {
 		Collections.shuffle(deck);
-		
-		for(String str: deck){
-            System.out.println(str);
-        }
 	}
 	
 	public void Split() {
 		
 	}
 	
-	public String getCard(int index) {
+	public Card getCard(int index) {
 		return deck.get(index);
 	}
 
