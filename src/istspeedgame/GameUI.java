@@ -20,6 +20,8 @@ public class GameUI extends JFrame implements ActionListener{
     private JPanel mainPanel;
     private JPanel optionsPanel;
     
+    private MainMenuUI mainMenuUI;
+    
     JButton[] hostCards;
     JButton[] guestCards;
     JButton[] activeCards;
@@ -53,9 +55,11 @@ public class GameUI extends JFrame implements ActionListener{
         hostLibrary = new JButton("Host \nLibrary");
         guestLibrary = new JButton("Guest \nLibrary");
         
+        Deck d = new Deck();
+        d.Shuffle();
         // How to add images to buttons
-        ImageIcon A1 = new ImageIcon("img/h4.png");
-        ImageIcon A2 = new ImageIcon("img/sa.png");
+        ImageIcon A1 = new ImageIcon("img/" + d.getCard(0) + ".png");
+        ImageIcon A2 = new ImageIcon("img/" + d.getCard(1) + ".png");
         
         activeCards[0] = new JButton(A1);
         activeCards[1] = new JButton(A2);
@@ -111,8 +115,8 @@ public class GameUI extends JFrame implements ActionListener{
         gamePanel = new JPanel(new BorderLayout());
         
         gamePanel.add(guestPanel, BorderLayout.NORTH);
-	gamePanel.add(activePanel, BorderLayout.CENTER);
-	gamePanel.add(hostPanel, BorderLayout.SOUTH);
+        gamePanel.add(activePanel, BorderLayout.CENTER);
+        gamePanel.add(hostPanel, BorderLayout.SOUTH);
         mainPanel.add(optionsPanel, BorderLayout.NORTH);
         mainPanel.add(gamePanel, BorderLayout.CENTER);
         
@@ -122,9 +126,13 @@ public class GameUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent evt){
         Object obj = evt.getSource();
         
+        // if : quit
         if(obj == quitBTN){
             System.exit(0);
-        } // if : quit
+        } else if (obj == mainMenuBTN) {
+        	mainMenuUI = new MainMenuUI();
+        	this.dispose();
+        }
     }
 
 } // MainMenuUI
