@@ -1,6 +1,8 @@
 package istspeedgame;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable{
 	private String suit;
 	private String value;
 	private int rank;
