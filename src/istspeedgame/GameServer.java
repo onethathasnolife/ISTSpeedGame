@@ -26,8 +26,12 @@ public class GameServer {
     private static class Handler extends Thread { //Handles Messages
         private String name;
         private Socket socket;
-        private BufferedReader in;
-        private PrintWriter out;
+        /*private BufferedReader in; OLD READER/WRITER
+        private PrintWriter out;*/
+        private Card left; // Current cards on top of the deck.
+        private Card right;
+        private ObjectInput oi; //this has me thinking i need to send a packet of 
+        private InputStream is;
 
         public Handler(Socket socket) {
             this.socket = socket;
@@ -35,6 +39,31 @@ public class GameServer {
 
         public void run() {
         	
+        	// Create character streams for the socket. 
+            try {
+            	is = socket.getInputStream();
+            	oi = new ObjectInputStream(is);
+            	
+            	//real confusing stuff but a try/catch surrounded by a try catch.
+            	
+            	
+            	try {
+					left = (Card) oi.readObject();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+            	
+            	
+            /*	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				out = new PrintWriter(socket.getOutputStream(), true); */
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
         }// run
     }// Handler
 }// GameServer
