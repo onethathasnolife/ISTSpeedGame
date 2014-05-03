@@ -33,10 +33,15 @@ public class GameUI extends JFrame implements ActionListener{
     JLabel timer;
     Deck deck;
     
+    ImageIcon[] P1_Hand_Icon = new ImageIcon[5];
+    ImageIcon[] P2_Hand_Icon = new ImageIcon[5];
+    
     public GameUI(){
     	System.out.println("GameUI - Building");
         
         deck = new Deck();
+        deck.updateHand(deck.P1, deck.P1_Hand);
+        deck.updateHand(deck.P2, deck.P2_Hand);
         
         this.initializeComponents();
         this.setVisible(true);
@@ -45,58 +50,55 @@ public class GameUI extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
     
         System.out.println("GameUI - Running");
-        
-        deck.updateHand(deck.P1, deck.P1_Hand);
-        deck.updateHand(deck.P2, deck.P2_Hand);
+      
     } // GameUI : Constructor
 
     public void initializeComponents(){
-        setTitle("<< SPEED | Hosting Game >>");
+        setTitle("<< SPEED >>");
         setLocationRelativeTo(null);
-        
-        P1_Hand = new JButton[5];
-        P2_Hand = new JButton[5];
-        Table_Mid = new JButton[2];
-        
-        P1_Deck = new JButton("Host \nLibrary");
-        P2_Deck = new JButton("Guest \nLibrary");
-        
-        // How to add images to buttons
-        ImageIcon Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
-        ImageIcon Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
-        
-        Table_Mid[0] = new JButton(Mid_1);
-        Table_Mid[1] = new JButton(Mid_2);
-        
+          
         optionsPanel = new JPanel(new GridLayout(1,7));
         P1_Panel = new JPanel(new GridLayout(1,7));
         P2_Panel = new JPanel(new GridLayout(1,7));
         Table_Panel = new JPanel(new GridLayout(1,7));
+        P1_Hand = new JButton[5];
+        P2_Hand = new JButton[5];
+        Table_Mid = new JButton[2];
         
-        mainMenuBTN = new JButton("Main Menu");
-        quitBTN = new JButton("Quit");
-        restartBTN = new JButton("Restart");
+        P1_Deck = new JButton("P1 Library ("+deck.P1.size()+")");
+        P2_Deck = new JButton("P2 Library ("+deck.P2.size()+")");
+
+        ImageIcon Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
+        ImageIcon Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
+        Table_Mid[0] = new JButton(Mid_1);
+        Table_Mid[1] = new JButton(Mid_2);
         
-        // Temporary Setup
         for(int i = 0; i < 5; i++){
-            P1_Hand[i] = new JButton ("H"+(i+1));
+            P1_Hand_Icon[i] = new ImageIcon("img/"+deck.P1_Hand.get(i)+".png");
+            P2_Hand_Icon[i] = new ImageIcon("img/"+deck.P2_Hand.get(i)+".png");
+            
+            P1_Hand[i] = new JButton(P1_Hand_Icon[i]);
+            P2_Hand[i] = new JButton(P2_Hand_Icon[i]);
+            
             P1_Panel.add(P1_Hand[i]);
-            P2_Hand[i] = new JButton ("G"+(i+1));
             P2_Panel.add(P2_Hand[i]);
+            
             if(i == 1){
                 Table_Panel.add(Table_Mid[0]);
                 Table_Mid[0].addActionListener(this);
             }
-            else if(i == 3){
+            if(i == 3){
                 Table_Panel.add(Table_Mid[1]);
                 Table_Mid[1].addActionListener(this);
             }
-            else{
-                Table_Panel.add(new JLabel(""));
-            }
+            
             P1_Hand[i].addActionListener(this);
             P2_Hand[i].addActionListener(this);
         }
+  
+        mainMenuBTN = new JButton("Main Menu");
+        quitBTN = new JButton("Quit");
+        restartBTN = new JButton("Restart");
         optionsPanel.add(mainMenuBTN);       
         optionsPanel.add(restartBTN);
         optionsPanel.add(quitBTN);
