@@ -34,6 +34,8 @@ public class GameUI extends JFrame implements ActionListener{
     JButton restartBTN;
     JLabel timer;
     Deck deck;
+    Player P1;
+    Player P2;
     
     ImageIcon[] P1_Hand_Icon = new ImageIcon[5];
     ImageIcon[] P2_Hand_Icon = new ImageIcon[5];
@@ -42,12 +44,13 @@ public class GameUI extends JFrame implements ActionListener{
     	System.out.println("GameUI - Building");
         
         deck = new Deck();
-        deck.updateHand(deck.P1, deck.P1_Hand);
-        deck.updateHand(deck.P2, deck.P2_Hand);
+        P1 = new Player(deck.P1, deck.P1_Hand);
+        P2 = new Player(deck.P2, deck.P2_Hand);
+        deck.updateHand(P1);
+        deck.updateHand(P2);
         
         this.initializeComponents();
         this.setVisible(true);
-        //this.setSize(1200,400);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.pack();
@@ -162,6 +165,12 @@ public class GameUI extends JFrame implements ActionListener{
         
         // Need to figure out how to get this to work for all buttons and possible actions
         System.out.println("Last Action: "+lastAction);
+        if(obj == Table_Mid[1] || obj == Table_Mid[3]){
+            // check if swap is possible
+            // remove card from hand
+            // update hand
+            // update Table_Mid
+        }
         if(obj == P1_Hand[0]){
             System.out.println("P1 - 0");
         }

@@ -17,7 +17,8 @@ public class MainMenuUI extends JFrame implements ActionListener{
     private JPanel mainMenuPanel;
     private JButton hostBTN;
     private JButton joinBTN;
-    private JButton instructionsBTN;
+    private JButton instBTN;
+    private JButton quitBTN;
 
     public MainMenuUI(){
 	System.out.println("MainMenuUI - Building");
@@ -34,18 +35,21 @@ public class MainMenuUI extends JFrame implements ActionListener{
     public void initializeComponents(){
         setTitle("<< SPEED >>");
         setLocationRelativeTo(null);
-        hostBTN      = new JButton("Host Game");
-	joinBTN     = new JButton("Join Game");
-	instructionsBTN = new JButton("Instructions");
+        hostBTN = new JButton("Host Game");
+	joinBTN = new JButton("Join Game");
+	instBTN = new JButton("Instructions");
+        quitBTN = new JButton("Quit");
 
-        mainMenuPanel = new JPanel(new GridLayout(3,1));
-        mainMenuPanel.add(hostBTN, BorderLayout.NORTH);
-	mainMenuPanel.add(joinBTN, BorderLayout.CENTER);
-	mainMenuPanel.add(instructionsBTN, BorderLayout.SOUTH);
+        mainMenuPanel = new JPanel(new GridLayout(4,1));
+        mainMenuPanel.add(hostBTN);
+	mainMenuPanel.add(joinBTN);
+	mainMenuPanel.add(instBTN);
+        mainMenuPanel.add(quitBTN);
         
 	hostBTN.addActionListener(this);
 	joinBTN.addActionListener(this);
-	instructionsBTN.addActionListener(this);
+	instBTN.addActionListener(this);
+        quitBTN.addActionListener(this);
         
         this.add(mainMenuPanel);
     } // initializeComponents
@@ -54,15 +58,18 @@ public class MainMenuUI extends JFrame implements ActionListener{
         Object obj = evt.getSource();
     
         if(obj == hostBTN){
-            gameUI = new GameUI();
-            this.dispose();
+            JOptionPane.showMessageDialog(mainMenuPanel, "Starting Game Server... [NON-FUNCTIONING]");
         } // if : hostBTN
         if(obj == joinBTN){
-            JOptionPane.showMessageDialog(mainMenuPanel, "Joining game... [NON-FUNCTIONING]");
+            gameUI = new GameUI();
+            this.dispose();          
         } // if : joinBTN
-        if(obj == instructionsBTN){
+        if(obj == instBTN){
             JOptionPane.showMessageDialog(mainMenuPanel, "These are instructions.");
         } // if : instructionsBTN
+        if(obj == quitBTN){
+            System.exit(0);
+        }
     } // actionPerformed
 
 } // MainMenuUI

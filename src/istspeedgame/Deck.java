@@ -80,13 +80,47 @@ public class Deck {
             }
         }
         
-        public void updateHand(ArrayList<Card> player_deck, ArrayList<Card> player_hand){
-            while(player_hand.size() < 5){
-                player_hand.add(player_deck.get(0));
-                player_deck.remove(0);
-            }
+        public boolean updateHand(Player player){
+            boolean success = false;
+            
+            // Check for null cards
+            for(int i = 0; i < player.hand.size(); i++){
+                if(player.hand.get(i) == null){
+                    player.hand.remove(i);
+                } // if : card is null, remove
+            } // for : player hand
+            
+            // Check if hand is full
+            while(player.hand.size() < 5){
+                // Check if deck is empty
+                if(!player.deck.isEmpty()){
+                    player.hand.add(player.deck.get(0));
+                    player.deck.remove(0);
+                    success = true;
+                } // if : deck not empty
+                else{
+                    System.out.println("Deck Empty");
+                } // else: deck empty
+            } // while : hand not full
+            
+            // Debugging purposes
             for(int i = 0; i < 5; i++){
-                System.out.println(player_hand.get(i));
+                System.out.println(player.hand.get(i));
             }
+            
+            return success;
+        }
+        
+        public boolean swapCard(Card toSwap, Card toReplace, Player player){
+            boolean success = false;
+            
+            if(toSwap.getRank() > toReplace.getRank())
+            {
+                toReplace = toSwap;
+                toSwap = null;
+                updateHand(player);
+            }
+            
+            return success;
         }
 }
