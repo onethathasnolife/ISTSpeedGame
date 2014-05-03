@@ -31,16 +31,19 @@ public class GameUI extends JFrame implements ActionListener{
     JButton quitBTN;
     JButton restartBTN;
     JLabel timer;
+    Deck deck;
     
     public GameUI(){
     	System.out.println("GameUI - Building");
+        
+        deck = new Deck();
         
         this.initializeComponents();
         this.setVisible(true);
         this.setSize(1200,400);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        
+    
         System.out.println("GameUI - Running");
     } // GameUI : Constructor
 
@@ -55,11 +58,9 @@ public class GameUI extends JFrame implements ActionListener{
         hostLibrary = new JButton("Host \nLibrary");
         guestLibrary = new JButton("Guest \nLibrary");
         
-        Deck d = new Deck();
-        d.Shuffle();
         // How to add images to buttons
-        ImageIcon A1 = new ImageIcon("img/" + d.getCard(0).toString() + ".png");
-        ImageIcon A2 = new ImageIcon("img/" + d.getCard(1).toString() + ".png");
+        ImageIcon A1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
+        ImageIcon A2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
         
         activeCards[0] = new JButton(A1);
         activeCards[1] = new JButton(A2);
