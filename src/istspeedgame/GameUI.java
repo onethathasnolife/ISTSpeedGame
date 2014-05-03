@@ -45,6 +45,9 @@ public class GameUI extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
     
         System.out.println("GameUI - Running");
+        
+        deck.updateHand(deck.P1, deck.P1_Hand);
+        deck.updateHand(deck.P2, deck.P2_Hand);
     } // GameUI : Constructor
 
     public void initializeComponents(){
@@ -59,11 +62,11 @@ public class GameUI extends JFrame implements ActionListener{
         P2_Deck = new JButton("Guest \nLibrary");
         
         // How to add images to buttons
-        ImageIcon A1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
-        ImageIcon A2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
+        ImageIcon Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
+        ImageIcon Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
         
-        Table_Mid[0] = new JButton(A1);
-        Table_Mid[1] = new JButton(A2);
+        Table_Mid[0] = new JButton(Mid_1);
+        Table_Mid[1] = new JButton(Mid_2);
         
         optionsPanel = new JPanel(new GridLayout(1,7));
         P1_Panel = new JPanel(new GridLayout(1,7));
@@ -81,12 +84,10 @@ public class GameUI extends JFrame implements ActionListener{
             P2_Hand[i] = new JButton ("G"+(i+1));
             P2_Panel.add(P2_Hand[i]);
             if(i == 1){
-                Table_Mid[0].setMaximumSize(new Dimension (40, 80));
                 Table_Panel.add(Table_Mid[0]);
                 Table_Mid[0].addActionListener(this);
             }
             else if(i == 3){
-                Table_Mid[0].setMaximumSize(new Dimension (40, 80));
                 Table_Panel.add(Table_Mid[1]);
                 Table_Mid[1].addActionListener(this);
             }
@@ -134,6 +135,10 @@ public class GameUI extends JFrame implements ActionListener{
         	mainMenuUI = new MainMenuUI();
         	this.dispose();
         }
+    }
+    
+    public void Update(){
+        
     }
 
 } // MainMenuUI

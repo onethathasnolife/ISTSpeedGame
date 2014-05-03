@@ -13,7 +13,8 @@ public class Deck {
         ArrayList<Card> tableRight = new ArrayList<>();
         ArrayList<Card> P1 = new ArrayList<>();
         ArrayList<Card> P2 = new ArrayList<>();
-	
+	ArrayList<Card> P1_Hand = new ArrayList<>();
+        ArrayList<Card> P2_Hand = new ArrayList<>();
 	LinkedList<Card> deck = new LinkedList<Card>();
 	
 	public Deck() {
@@ -76,6 +77,16 @@ public class Deck {
         public void printDeck(ArrayList<Card> deck){
             for(int i = 0; i < deck.size(); i++){
                 System.out.println(deck.get(i).toString());
+            }
+        }
+        
+        public void updateHand(ArrayList<Card> player_deck, ArrayList<Card> player_hand){
+            while(player_hand.size() < 5){
+                player_hand.add(player_deck.get(0));
+                player_deck.remove(0);
+            }
+            for(int i = 0; i < 5; i++){
+                System.out.println(player_hand.get(i));
             }
         }
 }
