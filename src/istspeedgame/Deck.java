@@ -114,11 +114,47 @@ public class Deck {
         public boolean swapCard(Card toSwap, Card toReplace, Player player){
             boolean success = false;
             
-            if(toSwap.getRank() > toReplace.getRank())
+            if(toSwap.getRank() - toReplace.getRank() == 1 || toSwap.getRank() - toReplace.getRank() == -1)
             {
-                toReplace = toSwap;
-                toSwap = null;
-                updateHand(player);
+                System.out.println("Swapping "+toReplace.toString()+" with "+toSwap.toString());
+                for(int i = 0; i < player.hand.size(); i++){
+                    if(player.hand.get(i) == toSwap){
+                        player.hand.remove(i);
+                    }
+                }
+                if(toReplace == this.tableMid.get(0)){
+                    this.tableMid.set(0, toSwap);
+                }
+                else if(toReplace == this.tableMid.get(1)){
+                    this.tableMid.set(1, toSwap);
+                }
+                if(updateHand(player)){
+                    success = true;
+                }
+            }
+            
+            return success;
+        }
+        
+        public boolean swapMid(int index){
+            boolean success = false;
+            
+            // Left
+            if(index == 0){
+                if(!this.tableLeft.isEmpty()){
+                    this.tableMid.set(0, this.tableLeft.get(0));
+                    this.tableLeft.remove(0);
+                    success = true;
+                }
+            }
+            
+            // Right
+            if(index == 4){
+                if(!this.tableRight.isEmpty()){
+                    this.tableMid.set(1, this.tableRight.get(0));
+                    this.tableRight.remove(0);
+                    success = true;
+                }    
             }
             
             return success;

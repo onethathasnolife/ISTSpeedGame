@@ -39,6 +39,7 @@ public class GameUI extends JFrame implements ActionListener{
     
     ImageIcon[] P1_Hand_Icon = new ImageIcon[5];
     ImageIcon[] P2_Hand_Icon = new ImageIcon[5];
+    ImageIcon Mid_1, Mid_2;
     
     public GameUI(){
     	System.out.println("GameUI - Building");
@@ -77,16 +78,16 @@ public class GameUI extends JFrame implements ActionListener{
         P2_Hand = new JButton[5];
         Table_Mid = new JButton[5];
         
-        P1_Deck = new JButton("P1 Library ("+deck.P1.size()+")");
-        P2_Deck = new JButton("P2 Library ("+deck.P2.size()+")");
+        P1_Deck = new JButton("P1 Library ("+P1.deck.size()+")");
+        P2_Deck = new JButton("P2 Library ("+P2.deck.size()+")");
 
-        ImageIcon Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
-        ImageIcon Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
+        Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
+        Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
         
-        Table_Mid[0] = new JButton("tableLeft");
+        Table_Mid[0] = new JButton("tableLeft ("+deck.tableLeft.size()+")");
         Table_Mid[1] = new JButton(Mid_1);
         Table_Mid[3] = new JButton(Mid_2);
-        Table_Mid[4] = new JButton("tableRight");
+        Table_Mid[4] = new JButton("tableRight ("+deck.tableRight.size()+")");
         
         Table_Mid[1].setOpaque(false);
         Table_Mid[1].setContentAreaFilled(false);
@@ -163,16 +164,85 @@ public class GameUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent evt){
         Object obj = evt.getSource();
         
-        // Need to figure out how to get this to work for all buttons and possible actions
+        // ONLY WORKS FOR P1 AT THE MOMENT
         System.out.println("Last Action: "+lastAction);
         if(obj == Table_Mid[1] || obj == Table_Mid[3]){
             // check if swap is possible
-            // remove card from hand
-            // update hand
-            // update Table_Mid
+            if(lastAction == P1_Hand[0]){
+                System.out.println("P1 - 0");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P1.hand.get(0),deck.tableMid.get(0),P1)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P1.hand.get(0),deck.tableMid.get(1),P1)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P1_Hand[1]){
+                System.out.println("P1 - 1");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P1.hand.get(1),deck.tableMid.get(0),P1)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P1.hand.get(1),deck.tableMid.get(1),P1)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P1_Hand[2]){
+                System.out.println("P1 - 2");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P1.hand.get(2),deck.tableMid.get(0),P1)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P1.hand.get(2),deck.tableMid.get(1),P1)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P1_Hand[3]){
+                System.out.println("P1 - 3");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P1.hand.get(3),deck.tableMid.get(0),P1)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P1.hand.get(3),deck.tableMid.get(1),P1)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P1_Hand[4]){
+                System.out.println("P1 - 4");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P1.hand.get(4),deck.tableMid.get(0),P1)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P1.hand.get(4),deck.tableMid.get(1),P1)){
+                        Update();
+                    }
+                }
+            }
         }
-        if(obj == P1_Hand[0]){
-            System.out.println("P1 - 0");
+        
+        // Swap Middle Cards
+        if(obj == Table_Mid[0]){
+            deck.swapMid(0);
+            Update();
+        }
+        if(obj == Table_Mid[4]){
+            deck.swapMid(4);
+            Update();
         }
         
         // if : quit
@@ -187,7 +257,25 @@ public class GameUI extends JFrame implements ActionListener{
     }
     
     public void Update(){
+        for(int i = 0; i < 5; i++){
+            P1_Hand_Icon[i] = new ImageIcon("img/"+deck.P1_Hand.get(i)+".png");
+            P2_Hand_Icon[i] = new ImageIcon("img/"+deck.P2_Hand.get(i)+".png");
+            P1_Hand[i].setIcon(P1_Hand_Icon[i]);
+            P2_Hand[i].setIcon(P2_Hand_Icon[i]);
+        }
         
+        Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
+        Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
+        Table_Mid[1].setIcon(Mid_1);
+        Table_Mid[3].setIcon(Mid_2);
+        
+        P1_Deck.setText("P1 Library ("+P1.deck.size()+")");
+        P2_Deck.setText("P2 Library ("+P2.deck.size()+")");
+        
+        Table_Mid[0].setText("tableLeft ("+deck.tableLeft.size()+")");
+        Table_Mid[4].setText("tableRight ("+deck.tableRight.size()+")");
+        
+        this.repaint();
     }
 
 } // MainMenuUI
