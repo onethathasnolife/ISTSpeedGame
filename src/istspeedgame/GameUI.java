@@ -6,10 +6,10 @@
 
 package istspeedgame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JFrame;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class GameUI extends JFrame implements ActionListener{
 
@@ -45,9 +45,10 @@ public class GameUI extends JFrame implements ActionListener{
         
         this.initializeComponents();
         this.setVisible(true);
-        this.setSize(1200,400);
+        //this.setSize(1200,400);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.pack();
     
         System.out.println("GameUI - Running");
       
@@ -61,19 +62,37 @@ public class GameUI extends JFrame implements ActionListener{
         P1_Panel = new JPanel(new GridLayout(1,7));
         P2_Panel = new JPanel(new GridLayout(1,7));
         Table_Panel = new JPanel(new GridLayout(1,7));
+        
+        P1_Panel.setBorder(new EmptyBorder(10,10,10,10));
+        P2_Panel.setBorder(new EmptyBorder(10,10,10,10));
+        Table_Panel.setBorder(new EmptyBorder(10,10,10,10));
+        optionsPanel.setBorder(new EmptyBorder(10,10,10,10));
+        
         P1_Hand = new JButton[5];
         P2_Hand = new JButton[5];
-        Table_Mid = new JButton[2];
+        Table_Mid = new JButton[5];
         
         P1_Deck = new JButton("P1 Library ("+deck.P1.size()+")");
         P2_Deck = new JButton("P2 Library ("+deck.P2.size()+")");
 
         ImageIcon Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
         ImageIcon Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
-        Table_Mid[0] = new JButton(Mid_1);
-        Table_Mid[1] = new JButton(Mid_2);
+        
+        Table_Mid[0] = new JButton("tableLeft");
+        Table_Mid[1] = new JButton(Mid_1);
+        Table_Mid[3] = new JButton(Mid_2);
+        Table_Mid[4] = new JButton("tableRight");
+        
+        Table_Mid[1].setOpaque(false);
+        Table_Mid[1].setContentAreaFilled(false);
+        Table_Mid[1].setBorderPainted(false);
+        
+        Table_Mid[3].setOpaque(false);
+        Table_Mid[3].setContentAreaFilled(false);
+        Table_Mid[3].setBorderPainted(false);
         
         for(int i = 0; i < 5; i++){
+            
             P1_Hand_Icon[i] = new ImageIcon("img/"+deck.P1_Hand.get(i)+".png");
             P2_Hand_Icon[i] = new ImageIcon("img/"+deck.P2_Hand.get(i)+".png");
             
@@ -83,19 +102,28 @@ public class GameUI extends JFrame implements ActionListener{
             P1_Panel.add(P1_Hand[i]);
             P2_Panel.add(P2_Hand[i]);
             
-            if(i == 1){
-                Table_Panel.add(Table_Mid[0]);
-                Table_Mid[0].addActionListener(this);
+            P1_Hand[i].setOpaque(false);
+            P1_Hand[i].setContentAreaFilled(false);
+            P1_Hand[i].setBorderPainted(false);
+            
+            P2_Hand[i].setOpaque(false);
+            P2_Hand[i].setContentAreaFilled(false);
+            P2_Hand[i].setBorderPainted(false);
+            
+            if(i < 5 && i != 2){
+                Table_Panel.add(Table_Mid[i]);
+                Table_Mid[i].addActionListener(this);
             }
-            if(i == 3){
-                Table_Panel.add(Table_Mid[1]);
-                Table_Mid[1].addActionListener(this);
+            else{
+                Table_Panel.add(new JLabel());
             }
             
             P1_Hand[i].addActionListener(this);
             P2_Hand[i].addActionListener(this);
         }
-  
+        
+        Table_Panel.add(new JLabel());
+        Table_Panel.add(new JLabel());
         mainMenuBTN = new JButton("Main Menu");
         quitBTN = new JButton("Quit");
         restartBTN = new JButton("Restart");
