@@ -48,13 +48,13 @@ public class GameServer {
             	
             	
             	try {
-					left = (Card) oi.readObject();
-				} catch (ClassNotFoundException e) {
+					left = (Card) oi.readObject(); //PROBS GOTTA ADD A VARIABLE TO DECK SHOWING LEFT/RIGHT AND CHANGING IT BASED ON CLIENT SIDE WORK, OR JUST ADD THIS TO THE CARD OBJECT
+				} catch (ClassNotFoundException e) { //OTHERWISE IM NOT REALLY SURE WHAT TO DO 
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             	
-            	
+            	System.out.println("Server Here:" + left.toString()); //Test to see what happens here.
             	
             /*	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				out = new PrintWriter(socket.getOutputStream(), true); */
