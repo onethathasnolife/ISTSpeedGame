@@ -14,19 +14,19 @@ import javax.swing.JFrame;
 public class GameUI extends JFrame implements ActionListener{
 
     private JPanel gamePanel;
-    private JPanel hostPanel;
-    private JPanel guestPanel;
-    private JPanel activePanel;
+    private JPanel P1_Panel;
+    private JPanel P2_Panel;
+    private JPanel Table_Panel;
     private JPanel mainPanel;
     private JPanel optionsPanel;
     
     private MainMenuUI mainMenuUI;
     
-    JButton[] hostCards;
-    JButton[] guestCards;
-    JButton[] activeCards;
-    JButton hostLibrary;
-    JButton guestLibrary;
+    JButton[] P1_Hand;
+    JButton[] P2_Hand;
+    JButton[] Table_Mid;
+    JButton P1_Deck;
+    JButton P2_Deck;
     JButton mainMenuBTN;
     JButton quitBTN;
     JButton restartBTN;
@@ -51,24 +51,24 @@ public class GameUI extends JFrame implements ActionListener{
         setTitle("<< SPEED | Hosting Game >>");
         setLocationRelativeTo(null);
         
-        hostCards = new JButton[5];
-        guestCards = new JButton[5];
-        activeCards = new JButton[2];
+        P1_Hand = new JButton[5];
+        P2_Hand = new JButton[5];
+        Table_Mid = new JButton[2];
         
-        hostLibrary = new JButton("Host \nLibrary");
-        guestLibrary = new JButton("Guest \nLibrary");
+        P1_Deck = new JButton("Host \nLibrary");
+        P2_Deck = new JButton("Guest \nLibrary");
         
         // How to add images to buttons
         ImageIcon A1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
         ImageIcon A2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
         
-        activeCards[0] = new JButton(A1);
-        activeCards[1] = new JButton(A2);
+        Table_Mid[0] = new JButton(A1);
+        Table_Mid[1] = new JButton(A2);
         
         optionsPanel = new JPanel(new GridLayout(1,7));
-        hostPanel = new JPanel(new GridLayout(1,7));
-        guestPanel = new JPanel(new GridLayout(1,7));
-        activePanel = new JPanel(new GridLayout(1,7));
+        P1_Panel = new JPanel(new GridLayout(1,7));
+        P2_Panel = new JPanel(new GridLayout(1,7));
+        Table_Panel = new JPanel(new GridLayout(1,7));
         
         mainMenuBTN = new JButton("Main Menu");
         quitBTN = new JButton("Quit");
@@ -76,25 +76,25 @@ public class GameUI extends JFrame implements ActionListener{
         
         // Temporary Setup
         for(int i = 0; i < 5; i++){
-            hostCards[i] = new JButton ("H"+(i+1));
-            hostPanel.add(hostCards[i]);
-            guestCards[i] = new JButton ("G"+(i+1));
-            guestPanel.add(guestCards[i]);
+            P1_Hand[i] = new JButton ("H"+(i+1));
+            P1_Panel.add(P1_Hand[i]);
+            P2_Hand[i] = new JButton ("G"+(i+1));
+            P2_Panel.add(P2_Hand[i]);
             if(i == 1){
-                activeCards[0].setMaximumSize(new Dimension (40, 80));
-                activePanel.add(activeCards[0]);
-                activeCards[0].addActionListener(this);
+                Table_Mid[0].setMaximumSize(new Dimension (40, 80));
+                Table_Panel.add(Table_Mid[0]);
+                Table_Mid[0].addActionListener(this);
             }
             else if(i == 3){
-                activeCards[0].setMaximumSize(new Dimension (40, 80));
-                activePanel.add(activeCards[1]);
-                activeCards[1].addActionListener(this);
+                Table_Mid[0].setMaximumSize(new Dimension (40, 80));
+                Table_Panel.add(Table_Mid[1]);
+                Table_Mid[1].addActionListener(this);
             }
             else{
-                activePanel.add(new JLabel(""));
+                Table_Panel.add(new JLabel(""));
             }
-            hostCards[i].addActionListener(this);
-            guestCards[i].addActionListener(this);
+            P1_Hand[i].addActionListener(this);
+            P2_Hand[i].addActionListener(this);
         }
         optionsPanel.add(mainMenuBTN);       
         optionsPanel.add(restartBTN);
@@ -102,12 +102,12 @@ public class GameUI extends JFrame implements ActionListener{
         timer = new JLabel("Time: 00:00");
         optionsPanel.add(timer);
         
-        hostPanel.add(new JLabel(""));
-        guestPanel.add(new JLabel(""));
-        hostPanel.add(hostLibrary);
-        guestPanel.add(guestLibrary);
-        hostLibrary.addActionListener(this);
-        guestLibrary.addActionListener(this);
+        P1_Panel.add(new JLabel(""));
+        P2_Panel.add(new JLabel(""));
+        P1_Panel.add(P1_Deck);
+        P2_Panel.add(P2_Deck);
+        P1_Deck.addActionListener(this);
+        P2_Deck.addActionListener(this);
         mainMenuBTN.addActionListener(this);
         quitBTN.addActionListener(this);
         restartBTN.addActionListener(this);
@@ -115,9 +115,9 @@ public class GameUI extends JFrame implements ActionListener{
         mainPanel = new JPanel(new BorderLayout());
         gamePanel = new JPanel(new BorderLayout());
         
-        gamePanel.add(guestPanel, BorderLayout.NORTH);
-        gamePanel.add(activePanel, BorderLayout.CENTER);
-        gamePanel.add(hostPanel, BorderLayout.SOUTH);
+        gamePanel.add(P2_Panel, BorderLayout.NORTH);
+        gamePanel.add(Table_Panel, BorderLayout.CENTER);
+        gamePanel.add(P1_Panel, BorderLayout.SOUTH);
         mainPanel.add(optionsPanel, BorderLayout.NORTH);
         mainPanel.add(gamePanel, BorderLayout.CENTER);
         
