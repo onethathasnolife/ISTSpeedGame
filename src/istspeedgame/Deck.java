@@ -91,7 +91,7 @@ public class Deck {
             } // for : player hand
             
             // Check if hand is full
-            while(player.hand.size() < 5){
+            while(player.hand.size() < 5 && !player.deck.isEmpty()){
                 // Check if deck is empty
                 if(!player.deck.isEmpty()){
                     player.hand.add(player.deck.get(0));
@@ -99,7 +99,7 @@ public class Deck {
                     success = true;
                 } // if : deck not empty
                 else{
-                    System.out.println("Deck Empty");
+                    System.out.println("Deck Empty");                   
                 } // else: deck empty
             } // while : hand not full
             
@@ -114,7 +114,12 @@ public class Deck {
         public boolean swapCard(Card toSwap, Card toReplace, Player player){
             boolean success = false;
             
-            if(toSwap.getRank() - toReplace.getRank() == 1 || toSwap.getRank() - toReplace.getRank() == -1)
+            // Possible replacements +/- 1 or Ace/2
+            if(
+                toSwap.getRank() - toReplace.getRank() == 1 || 
+                toSwap.getRank() - toReplace.getRank() == -1 || 
+                toSwap.getRank() - toReplace.getRank() == 12 ||  
+                toSwap.getRank() - toReplace.getRank() == -12)
             {
                 System.out.println("Swapping "+toReplace.toString()+" with "+toSwap.toString());
                 for(int i = 0; i < player.hand.size(); i++){

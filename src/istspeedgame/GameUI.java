@@ -62,7 +62,6 @@ public class GameUI extends JFrame implements ActionListener{
 
     public void initializeComponents(){
         setTitle("<< SPEED >>");
-        setLocationRelativeTo(null);
           
         optionsPanel = new JPanel(new GridLayout(1,7));
         P1_Panel = new JPanel(new GridLayout(1,7));
@@ -163,11 +162,14 @@ public class GameUI extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent evt){
         Object obj = evt.getSource();
-        
-        // ONLY WORKS FOR P1 AT THE MOMENT
+    
+        // Swap cards
         System.out.println("Last Action: "+lastAction);
         if(obj == Table_Mid[1] || obj == Table_Mid[3]){
-            // check if swap is possible
+            
+            //******************************************************************
+            //                          PLAYER 1
+            //******************************************************************
             if(lastAction == P1_Hand[0]){
                 System.out.println("P1 - 0");
                 if(obj == Table_Mid[1]){
@@ -233,6 +235,75 @@ public class GameUI extends JFrame implements ActionListener{
                     }
                 }
             }
+            
+            //******************************************************************
+            //                          PLAYER 2
+            //******************************************************************
+            if(lastAction == P2_Hand[0]){
+                System.out.println("P2 - 0");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P2.hand.get(0),deck.tableMid.get(0),P2)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P2.hand.get(0),deck.tableMid.get(1),P2)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P2_Hand[1]){
+                System.out.println("P2 - 1");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P2.hand.get(1),deck.tableMid.get(0),P2)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P2.hand.get(1),deck.tableMid.get(1),P2)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P2_Hand[2]){
+                System.out.println("P2 - 2");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P2.hand.get(2),deck.tableMid.get(0),P2)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P2.hand.get(2),deck.tableMid.get(1),P2)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P2_Hand[3]){
+                System.out.println("P2 - 3");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P2.hand.get(3),deck.tableMid.get(0),P2)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P2.hand.get(3),deck.tableMid.get(1),P2)){
+                        Update();
+                    }
+                }
+            }
+            if(lastAction == P2_Hand[4]){
+                System.out.println("P2 - 4");
+                if(obj == Table_Mid[1]){
+                    if(deck.swapCard(P2.hand.get(4),deck.tableMid.get(0),P2)){
+                        Update();
+                    }
+                }
+                else if(obj == Table_Mid[3]){
+                    if(deck.swapCard(P2.hand.get(4),deck.tableMid.get(1),P2)){
+                        Update();
+                    }
+                }
+            }
         }
         
         // Swap Middle Cards
@@ -243,6 +314,10 @@ public class GameUI extends JFrame implements ActionListener{
         if(obj == Table_Mid[4]){
             deck.swapMid(4);
             Update();
+        }
+        
+        if(obj == restartBTN){
+            this.dispose();
         }
         
         // if : quit
