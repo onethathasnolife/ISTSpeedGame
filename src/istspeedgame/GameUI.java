@@ -20,6 +20,8 @@ public class GameUI extends JFrame implements ActionListener{
     private JPanel mainPanel;
     private JPanel optionsPanel;
     
+    private Object lastAction;
+    
     private MainMenuUI mainMenuUI;
     
     JButton[] P1_Hand;
@@ -158,6 +160,12 @@ public class GameUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent evt){
         Object obj = evt.getSource();
         
+        // Need to figure out how to get this to work for all buttons and possible actions
+        System.out.println("Last Action: "+lastAction);
+        if(obj == P1_Hand[0]){
+            System.out.println("P1 - 0");
+        }
+        
         // if : quit
         if(obj == quitBTN){
             System.exit(0);
@@ -165,6 +173,8 @@ public class GameUI extends JFrame implements ActionListener{
         	mainMenuUI = new MainMenuUI();
         	this.dispose();
         }
+        
+        lastAction = obj;
     }
     
     public void Update(){
