@@ -8,20 +8,29 @@ import java.net.*;
  * we could double the logic but i do not see any point and considering this would be hacked together i don't think we should.
  * 
  */
-public class GameServer {
+public class GameServer implements Runnable {
 	private static final int PORT = 5555;//Port number
 	
-	public static void main(String[] args) throws Exception {
+	public void run(){
         System.out.println("The Game Server is running.");
-        ServerSocket listener = new ServerSocket(PORT);
+        ServerSocket listener = null;
         try {
+            listener = new ServerSocket(PORT);
             while (true) {
                 new Handler(listener.accept()).start(); //Starts the handler which does the work
             } // while : true
-        } finally {
-            listener.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                listener.close();
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
         }//finally
-    }// main
+        }// run
 
     private static class Handler extends Thread { //Handles Messages
         private String name;
@@ -39,66 +48,47 @@ public class GameServer {
             this.socket = socket;
         }// const
 
-        public void run() {
+    public void run() {
         	
-        	// Create character streams for the socket. 
-            try {
-            	is = socket.getInputStream();
-            	oi = new ObjectInputStream(is);
+        // Create character streams for the socket. 
+        try {
+            is = socket.getInputStream();
+            oi = new ObjectInputStream(is);
             	
-            	outs = socket.getOutputStream();
-            	out = new ObjectOutputStream(outs);
-            	//real confusing stuff but a try/catch surrounded by a try catch.
+            outs = socket.getOutputStream();
+            out = new ObjectOutputStream(outs);          	
             	
-            	
-            	try {
-            	
-            			Object temp = null;
-            			temp = oi.readObject();
-            			left = (Card) temp; //reads and sets object
-            			right = left;
-            			out.writeObject(temp); //sends object through output stream.
-            			out.flush();
-						out.close(); /*
-						
-						
-						
-						
-						
-						THIS LINE OF CODE MIGHT BREAK THINGS.
-						
-						
-						
-						
-						
-						
-						
-						*/
-            		
-					//PROBS GOTTA ADD A VARIABLE TO DECK SHOWING LEFT/RIGHT AND CHANGING IT BASED ON CLIENT SIDE WORK, OR JUST ADD THIS TO THE CARD OBJECT
-				} catch (ClassNotFoundException e) { //OTHERWISE IM NOT REALLY SURE WHAT TO DO 
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					System.out.println("Server Here:" + left.toString()); //Test to see what happens here.
-					/*try {
-						//out.flush();
-						//out.close();
-					} catch (IOException e){
-						e.printStackTrace();
-					}*/
-				}
-            	
-            	
-            	
+            try { 	
+                Object temp = null;
+                temp = oi.readObject();
+                left = (Card) temp; //reads and sets object
+                right = left;
+                out.writeObject(temp); //sends object through output stream.
+                out.flush();
+                out.close();
+            } 
+            catch(IOException e){ 
+                e.printStackTrace();
+            }
+            catch(ClassNotFoundException e){
+                e.printStackTrace();
+            }
+	}
+        catch(IOException e){ 
+                e.printStackTrace();
+        }
+        finally{
+            System.out.println("Server Here:" + left.toString()); //Test to see what happens here.
+            /*try {
+            //out.flush();
+            //out.close();
+            } catch (IOException e){
+            e.printStackTrace();
+            }*/
+	}         	
             /*	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				out = new PrintWriter(socket.getOutputStream(), true); */
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            
+							
         }// run
     }// Handler
 }// GameServer

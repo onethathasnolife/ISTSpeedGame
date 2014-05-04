@@ -19,9 +19,9 @@ public class Player {
             
        
 		try {
-		Socket soc = new Socket("localhost", PORT);  	  //Socket Setup, Connects to server
-		OutputStream os = soc.getOutputStream();  		//Setup Output Stream
-		ObjectOutput obj = new ObjectOutputStream(os); //'Cast' to Object outpost stream.
+		Socket soc = new Socket("localhost", PORT);         //Socket Setup, Connects to server
+		OutputStream os = soc.getOutputStream();            //Setup Output Stream
+		ObjectOutput obj = new ObjectOutputStream(os);      //'Cast' to Object outpost stream.
 		
 		
 		
@@ -46,10 +46,5 @@ public class Player {
 		
 		//System.out.println("Client Here: " + b.toString());
 	}//const
-		
-	public static void main(String[] args){ //FAST Test of Player.
-		Deck a = new Deck();
-		Player p = new Player(a.P1, a.P1_Hand);
-	}
-        
+		       
 }// Player

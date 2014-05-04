@@ -43,8 +43,7 @@ public class GameUI extends JFrame implements ActionListener{
     
     public GameUI(){
     	System.out.println("GameUI - Building");
-        
-        deck = new Deck();
+      
         P1 = new Player(deck.P1, deck.P1_Hand);
         P2 = new Player(deck.P2, deck.P2_Hand);
         deck.updateHand(P1);
