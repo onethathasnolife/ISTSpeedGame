@@ -59,18 +59,6 @@ public class Deck {
                 tableRight.add(deck.get(count));
                 count++;
             }
-            
-            System.out.println("Cards split: "+count);
-            System.out.println("Table Left: ");
-            printDeck(tableLeft);
-            System.out.println("Table Mid: ");
-            printDeck(tableMid);
-            System.out.println("Table Right: ");
-            printDeck(tableRight);
-            System.out.println("Player 1 Deck: ");
-            printDeck(P1);
-            System.out.println("Player 2 Deck: ");
-            printDeck(P2);
                 
 	}// Split
 	

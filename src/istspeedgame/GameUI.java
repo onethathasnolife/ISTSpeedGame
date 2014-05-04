@@ -62,7 +62,7 @@ public class GameUI extends JFrame implements ActionListener{
 
     public void initializeComponents(){
         setTitle("<< SPEED >>");
-          
+        
         optionsPanel = new JPanel(new GridLayout(1,7));
         P1_Panel = new JPanel(new GridLayout(1,7));
         P2_Panel = new JPanel(new GridLayout(1,7));
@@ -156,7 +156,6 @@ public class GameUI extends JFrame implements ActionListener{
         gamePanel.add(P1_Panel, BorderLayout.SOUTH);
         mainPanel.add(optionsPanel, BorderLayout.NORTH);
         mainPanel.add(gamePanel, BorderLayout.CENTER);
-        
         this.add(mainPanel);
     } // initializeComponents
 
