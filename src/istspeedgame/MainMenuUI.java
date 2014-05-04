@@ -9,6 +9,8 @@ package istspeedgame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.PrintStream;
 import javax.swing.JFrame;
 
 public class MainMenuUI extends JFrame implements ActionListener{
@@ -20,6 +22,18 @@ public class MainMenuUI extends JFrame implements ActionListener{
     private JButton instBTN;
     private JButton quitBTN;
 
+    public MainMenuUI(PrintStream out, BufferedReader in){
+	System.out.println("MainMenuUI - Building");
+        
+        this.initializeComponents();
+	this.setVisible(true);
+        this.setSize(450,300);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        
+        System.out.println("MainMenuUI - Running");
+    } // MainMenuUI : Constructor
+    
     public MainMenuUI(){
 	System.out.println("MainMenuUI - Building");
         
@@ -63,7 +77,8 @@ public class MainMenuUI extends JFrame implements ActionListener{
             server.run();
         } // if : hostBTN
         if(obj == joinBTN){
-            gameUI = new GameUI();
+            ClientConnection client = new ClientConnection();
+            client.start();
             this.dispose();          
         } // if : joinBTN
         if(obj == instBTN){

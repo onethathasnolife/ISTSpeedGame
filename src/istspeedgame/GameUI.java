@@ -36,14 +36,16 @@ public class GameUI extends JFrame implements ActionListener{
     Deck deck;
     Player P1;
     Player P2;
+    Client client;
     
     ImageIcon[] P1_Hand_Icon = new ImageIcon[5];
     ImageIcon[] P2_Hand_Icon = new ImageIcon[5];
     ImageIcon Mid_1, Mid_2;
     
-    public GameUI(){
+    public GameUI(Client client){
     	System.out.println("GameUI - Building");
-      
+        
+        this.client = client;
         P1 = new Player(deck.P1, deck.P1_Hand);
         P2 = new Player(deck.P2, deck.P2_Hand);
         deck.updateHand(P1);
