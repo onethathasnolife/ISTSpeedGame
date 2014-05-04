@@ -332,13 +332,26 @@ public class GameUI extends JFrame implements ActionListener{
     }
     
     public void Update(){
-        for(int i = 0; i < 5; i++){
-            P1_Hand_Icon[i] = new ImageIcon("img/"+deck.P1_Hand.get(i)+".png");
-            P2_Hand_Icon[i] = new ImageIcon("img/"+deck.P2_Hand.get(i)+".png");
+        for(int i = 0; i < P1.hand.size(); i++){
+            P1_Hand_Icon[i] = new ImageIcon("img/"+P1.hand.get(i)+".png");
             P1_Hand[i].setIcon(P1_Hand_Icon[i]);
+        }
+        for(int i = 0; i < P2.hand.size(); i++){
+            P2_Hand_Icon[i] = new ImageIcon("img/"+P2.hand.get(i)+".png");
             P2_Hand[i].setIcon(P2_Hand_Icon[i]);
         }
-        
+        if(P1.hand.isEmpty()){
+            for(int i = deck.P1_Hand.size(); i < 5; i++){
+                P1_Hand_Icon[i] = new ImageIcon("img/x.png");
+                P1_Hand[i].setIcon(P1_Hand_Icon[i]);
+            }
+        }
+        if(P2.deck.isEmpty()){
+            for(int i = deck.P2_Hand.size(); i < 5; i++){
+                P2_Hand_Icon[i] = new ImageIcon("img/x.png");
+                P2_Hand[i].setIcon(P2_Hand_Icon[i]);
+            }
+        }
         Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
         Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
         Table_Mid[1].setIcon(Mid_1);

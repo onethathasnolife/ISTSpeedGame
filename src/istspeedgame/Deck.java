@@ -99,14 +99,10 @@ public class Deck {
                     success = true;
                 } // if : deck not empty
                 else{
-                    System.out.println("Deck Empty");                   
+                    System.out.println("Deck Empty");
+                    success = true;
                 } // else: deck empty
             } // while : hand not full
-            
-            // Debugging purposes
-            for(int i = 0; i < 5; i++){
-                System.out.println(player.hand.get(i));
-            }
             
             return success;
         }
@@ -114,7 +110,7 @@ public class Deck {
         public boolean swapCard(Card toSwap, Card toReplace, Player player){
             boolean success = false;
             
-            // Possible replacements +/- 1 or Ace/2
+            // Possible replacements +/- 1 rank or Ace/2
             if(
                 toSwap.getRank() - toReplace.getRank() == 1 || 
                 toSwap.getRank() - toReplace.getRank() == -1 || 
