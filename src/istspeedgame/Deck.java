@@ -1,8 +1,9 @@
 package istspeedgame;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Deck {
+public class Deck implements Serializable{
 	
 	String [] suits  = {"s","c","h","d"};
 	String [] values = {"2","3","4","5","6","7","8","9","10","j","q","k","a"};

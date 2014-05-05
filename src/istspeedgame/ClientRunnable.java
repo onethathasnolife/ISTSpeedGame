@@ -6,10 +6,7 @@
 
 package istspeedgame;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -26,15 +23,27 @@ public class ClientRunnable implements Runnable {
     
     public void run(){
         try{
-            BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
-            PrintStream out = new PrintStream(server.getOutputStream());
-            
+           /* BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
+            PrintStream out = new PrintStream(server.getOutputStream()); */ //I am not sure why buffered reader and print stream.
+        	
+            //Im going to copypasta my stuff from the old stuff into here.
+        	OutputStream out = server.getOutputStream();          //Setup Output Stream In reality this doesnt need to be here.
+    		ObjectOutput outs = new ObjectOutputStream(out);      //'Cast' to Object outpost stream.
+        	InputStream in = server.getInputStream();
+    		ObjectInput ins = new ObjectInputStream(server.getInputStream());
+        	//Object a = null;
+    		//outs.writeObject(a); //Sockets getting disconnected bc of things.
+    		Deck a1 = (Deck) ins.readObject();
             Client client = new Client(in, out);
+           
             
-            GameUI game = new GameUI(client);
+            GameUI game = new GameUI(client, a1); //Makes and throws the deck here, kinda makes client useless.
+            System.out.println("Game Made");
+            game.initializeComponents();
         }
-        catch(IOException e){
-            System.err.println("IOException: "+e.getMessage());
+        catch(IOException | ClassNotFoundException e){
+        	e.getStackTrace();
+            //System.err.println("IOException: "+e.getMessage());
             System.exit(-1);
         }
     }

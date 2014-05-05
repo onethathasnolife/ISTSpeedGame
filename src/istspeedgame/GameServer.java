@@ -14,10 +14,11 @@ public class GameServer implements Runnable {
 	public void run(){
         System.out.println("The Game Server is running.");
         ServerSocket listener = null;
+        Deck a = new Deck(); //Server controls the new deck.
         try {
             listener = new ServerSocket(PORT);
             while (true) {
-                new Handler(listener.accept()).start(); //Starts the handler which does the work
+                new Handler(listener.accept(), a).start(); //Starts the handler which does the work
             } // while : true
         }
         catch(IOException e){
@@ -33,62 +34,90 @@ public class GameServer implements Runnable {
         }// run
 
     private static class Handler extends Thread { //Handles Messages
-        private String name;
         private Socket socket;
         /*private BufferedReader in; OLD READER/WRITER
         private PrintWriter out;*/
-        private Card left; // Current cards on top of the deck.
-        private Card right;
         private ObjectInput oi; //this has me thinking i need to send a packet of 
         private InputStream is;
         private ObjectOutputStream out;
         private OutputStream outs;
+        private Deck a;
 
-        public Handler(Socket socket) {
+        public Handler(Socket socket, Deck a) {
             this.socket = socket;
+            this.a = a;
         }// const
 
     public void run() {
         	
-        // Create character streams for the socket. 
+        // Create character streams for the socket.
+    	System.out.println("Made it here running");
         try {
             is = socket.getInputStream();
-            oi = new ObjectInputStream(is);
-            	
+            oi = new ObjectInputStream(is); //Here for little reason but keep this
+            //Object temp = oi.readObject(); // When we want to read the object sent
             outs = socket.getOutputStream();
-            out = new ObjectOutputStream(outs);          	
+            out = new ObjectOutputStream(outs);
+            
+        	if(a.P1 != null){ //First connection gets this. then removes the deck.
+        		
+        	}
+        	else if(a.P2 != null){ //Second connection technically gets this sent. then removes the deck.
+        		
+        	}
+        	else{
+        		System.out.println("We Require more Decks to Continue, More than 2 Connections"); //Simple error log.
+        	}
+        	
+        	
+        	
+            outs = socket.getOutputStream();
+            out = new ObjectOutputStream(outs);
+            out.writeObject(a); //sends object through output stream.
+            out.flush();
+            //out.close();
+            while(true){
+            	sleep(150);
+            	//System.out.println("Made it here whiling");
             	
-            try { 	
-                Object temp = null;
-                temp = oi.readObject();
-                left = (Card) temp; //reads and sets object
-                right = left;
-                out.writeObject(temp); //sends object through output stream.
-                out.flush();
-                out.close();
-            } 
+            }
+
+            /*try { 
+            	while(true){
+	            	while(oi.available() > 0){ //Only if something is being pushed through the stream....
+	                Object temp = null;
+	                temp = oi.readObject();
+	    
+	                Deck tempa = (Deck) temp;
+	                                     
+	                //out.close();            	
+	            	}//while oi.available()
+	            	
+	            	out.writeObject(a); //sends object through output stream.
+	                out.flush();
+            	}//while true
+            } //try
             catch(IOException e){ 
                 e.printStackTrace();
             }
             catch(ClassNotFoundException e){
                 e.printStackTrace();
-            }
-	}
-        catch(IOException e){ 
-                e.printStackTrace();
-        }
-        finally{
-            System.out.println("Server Here:" + left.toString()); //Test to see what happens here.
-            /*try {
-            //out.flush();
-            //out.close();
-            } catch (IOException e){
-            e.printStackTrace();
             }*/
-	}         	
-            /*	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				out = new PrintWriter(socket.getOutputStream(), true); */
-							
+        }
+        catch(IOException | InterruptedException e){ 
+               e.printStackTrace();
+        } //catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		//}
+    finally{
+        	System.out.println("Made it here finally");
+        }
         }// run
     }// Handler
+    public static void main(String[] args){
+		GameServer a = new GameServer();
+		Thread thread = new Thread(a);
+		thread.start();
+	}
 }// GameServer

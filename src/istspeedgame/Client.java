@@ -6,8 +6,7 @@
 
 package istspeedgame;
 
-import java.io.BufferedReader;
-import java.io.PrintStream;
+import java.io.*;
 
 /**
  *
@@ -15,20 +14,28 @@ import java.io.PrintStream;
  */
 public class Client {
     
-    private final BufferedReader in;
-    private final PrintStream out;
+    /*private final BufferedReader in;
+    private final PrintStream out;*/
+	private final InputStream in;
+	private final OutputStream out;
     
-    public Client(BufferedReader in, PrintStream out){
+    public Client(/*BufferedReader in, PrintStream out*/InputStream in, OutputStream out){
         this.in = in;
         this.out = out;
     } // Constructor
     
-    public BufferedReader getIn(){
+    public InputStream getIn(){
+    	return in;
+    }
+    public OutputStream getOut(){
+    	return out;
+    }
+    /*public BufferedReader getIn(){
         return in;
     } // getIn
     
     public PrintStream getOut(){
         return out;
-    } // getOut
+    } // getOut*/
     
 } // Client
