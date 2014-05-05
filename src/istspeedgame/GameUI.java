@@ -67,7 +67,7 @@ public class GameUI extends JFrame implements ActionListener{
         P2 = new Player(deck.P2, deck.P2_Hand);
         deck.updateHand(P1);
         deck.updateHand(P2);
-        
+       
         this.initializeComponents();
         this.setVisible(true);
         this.setResizable(false);

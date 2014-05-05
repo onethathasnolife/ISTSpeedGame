@@ -27,9 +27,9 @@ public class Player {
 		obj.writeObject(deck.get(0));
 		obj.flush(); 		//Something something writes A to output?
 		//obj.close();		// Similar thing to get stuff FUCK THIS LINE OF CODE HONESTLY ITS PISSES ME OFF.
-		ObjectInput objin = new ObjectInputStream(soc.getInputStream());
+		/*ObjectInput objin = new ObjectInputStream(soc.getInputStream());
 		Object temp = null;
-		temp = objin.readObject();
+		temp = objin.readObject();*/
 		
 		//b = (Card) temp; //HEY WE RECIEVED SOMETHING FROM THE SERVER!!!!
 		
@@ -37,9 +37,9 @@ public class Player {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}//catch
-		catch (ClassNotFoundException e) {
+		/*catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 	}//const
 		       

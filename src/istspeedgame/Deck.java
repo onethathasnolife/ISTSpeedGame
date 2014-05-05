@@ -10,12 +10,12 @@ public class Deck implements Serializable{
 	Card [] cards = new Card[52];
         
 	ArrayList<Card> tableLeft = new ArrayList<>();
-        ArrayList<Card> tableMid = new ArrayList<>();
-        ArrayList<Card> tableRight = new ArrayList<>();
-        ArrayList<Card> P1 = new ArrayList<>();
-        ArrayList<Card> P2 = new ArrayList<>();
+    ArrayList<Card> tableMid = new ArrayList<>();
+    ArrayList<Card> tableRight = new ArrayList<>();
+    ArrayList<Card> P1 = new ArrayList<>();
+    ArrayList<Card> P2 = new ArrayList<>();
 	ArrayList<Card> P1_Hand = new ArrayList<>();
-        ArrayList<Card> P2_Hand = new ArrayList<>();
+    ArrayList<Card> P2_Hand = new ArrayList<>();
 	LinkedList<Card> deck = new LinkedList<Card>();
 	
 	public Deck() {
