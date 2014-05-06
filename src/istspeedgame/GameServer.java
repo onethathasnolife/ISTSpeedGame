@@ -15,13 +15,17 @@ public class GameServer implements Runnable {
 	private static Object obj;
 	private static Object obj2;
 	private static Deck deck;
+        public static boolean running = false;
+        
 	public void run(){
         System.out.println("The Game Server is running.");
+        
         ServerSocket listener = null;
         deck = new Deck(); //Server controls the new deck.
         try {
             listener = new ServerSocket(PORT);
             while (true) {
+                running = true;
                 new Handler(listener.accept(), deck, currentConnections).start(); //Starts the handler which does the work
             } // while : true
         }
@@ -102,7 +106,7 @@ public class GameServer implements Runnable {
         	}
         	
         	
-        	
+            
             outs = socket.getOutputStream();
             out = new ObjectOutputStream(outs);
            

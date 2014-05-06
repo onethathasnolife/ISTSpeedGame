@@ -72,14 +72,20 @@ public class MainMenuUI extends JFrame implements ActionListener{
         Object obj = evt.getSource();
     
         if(obj == hostBTN){
-            JOptionPane.showMessageDialog(mainMenuPanel, "Starting Game Server... [NON-FUNCTIONING]");
-            GameServer server = new GameServer();
-            server.run();
+            JOptionPane.showMessageDialog(mainMenuPanel, "Starting Game Server");
+            GameServer gs = new GameServer();
+            Thread server = new Thread(gs);
+            server.start();
         } // if : hostBTN
         if(obj == joinBTN){
             ClientConnection client = new ClientConnection();
-            client.start();
-            this.dispose();          
+            if(GameServer.running){
+                client.start();
+                this.dispose(); 
+            }
+            else{
+                JOptionPane.showMessageDialog(mainMenuPanel, "No server found.");
+            }         
         } // if : joinBTN
         if(obj == instBTN){
             JOptionPane.showMessageDialog(mainMenuPanel, "These are instructions.");

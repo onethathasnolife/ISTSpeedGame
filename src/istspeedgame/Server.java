@@ -18,6 +18,7 @@ public class Server {
     
     private static final int PORT = 5555;
     private static boolean start = false;
+    public boolean running = false;
     
     public void start(){
         
@@ -33,7 +34,7 @@ public class Server {
                 ServerRunnable run = new ServerRunnable(server);
                 Thread thread = new Thread(run);
                 thread.start();
-            } // while
+            } // while      
         } // try
         catch(IOException e){
             e.printStackTrace();
