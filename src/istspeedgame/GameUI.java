@@ -124,8 +124,8 @@ public class GameUI extends JFrame implements ActionListener{
         P2_Hand = new JButton[5];
         Table_Mid = new JButton[5];
         
-        P1_Deck = new JLabel("P1 Library ("+P1.deck.size()+")");
-        P2_Deck = new JLabel("P2 Library ("+P2.deck.size()+")");
+        P1_Deck = new JLabel("Cards Left ("+P1.deck.size()+")");
+        P2_Deck = new JLabel("Cards Left ("+P2.deck.size()+")");
 
         Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
         Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
@@ -408,6 +408,12 @@ public class GameUI extends JFrame implements ActionListener{
         }
     }
     
+    public void endGame(String player){
+        JOptionPane.showMessageDialog(this, "Player "+player+" has won!");
+        tim.stop();
+        this.dispose();
+    }
+    
     public void Update(){
         //System.out.println("Updating UI");
         
@@ -426,11 +432,17 @@ public class GameUI extends JFrame implements ActionListener{
                 P1_Hand_Icon[i] = new ImageIcon();
                 P1_Hand[i].setIcon(P1_Hand_Icon[i]);
             }
+            if(P1.hand.isEmpty()){
+                endGame("1");
+            }
         }
         if(P2.deck.isEmpty()){
             for(int i = P2.hand.size(); i < 5; i++){
                 P2_Hand_Icon[i] = new ImageIcon();
                 P2_Hand[i].setIcon(P2_Hand_Icon[i]);
+            }
+            if(P2.hand.isEmpty()){
+                endGame("2");
             }
         }
         Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
@@ -438,8 +450,8 @@ public class GameUI extends JFrame implements ActionListener{
         Table_Mid[1].setIcon(Mid_1);
         Table_Mid[3].setIcon(Mid_2);
         
-        P1_Deck.setText("P1 Library ("+P1.deck.size()+")");
-        P2_Deck.setText("P2 Library ("+P2.deck.size()+")");
+        P1_Deck.setText("Cards Left ("+P1.deck.size()+")");
+        P2_Deck.setText("Cards Left ("+P2.deck.size()+")");
         
         Table_Mid[0].setText("tableLeft ("+deck.tableLeft.size()+")");
         Table_Mid[4].setText("tableRight ("+deck.tableRight.size()+")");
