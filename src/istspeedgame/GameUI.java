@@ -293,7 +293,7 @@ public class GameUI extends JFrame implements ActionListener{
             //******************************************************************
             //                          PLAYER 2
             //******************************************************************
-            if(lastAction == P2_Hand[0]){
+            /*if(lastAction == P2_Hand[0]){
                 System.out.println("P2 - 0");
                 if(obj == Table_Mid[1]){
                     if(deck.swapCard(P2.hand.get(0),deck.tableMid.get(0),P2)){
@@ -357,7 +357,7 @@ public class GameUI extends JFrame implements ActionListener{
                         Update();
                     }
                 }
-            }
+            }*/
         }
         }
         
@@ -414,7 +414,7 @@ public class GameUI extends JFrame implements ActionListener{
             P1_Hand[i].setIcon(P1_Hand_Icon[i]);
         }
         for(int i = 0; i < P2.hand.size(); i++){
-            P2_Hand_Icon[i] = new ImageIcon("img/"+P2.hand.get(i)+".png");
+            P2_Hand_Icon[i] = new ImageIcon("img/"+"x"+".png");
             P2_Hand[i].setIcon(P2_Hand_Icon[i]);
         }
         if(P1.deck.isEmpty()){
