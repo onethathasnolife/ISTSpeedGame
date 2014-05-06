@@ -1,21 +1,53 @@
 package istspeedgame;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 /*
  * READING THIS? GOOD. I feel this is the best way to do this.. its going to open a stream just like a chat program that does it,
  * when it does it relays the card information. The logic is all client side and unsecure like stuff, we can probably double the 
  * we could double the logic but i do not see any point and considering this would be hacked together i don't think we should.
  * 
  */
-public class GameServer implements Runnable {
+public class GameServer extends JFrame implements ActionListener, Runnable {
 	private static final int PORT = 5555;//Port number
 	public static int currentConnections =0;
 	private static Object obj;
 	private static Object obj2;
 	private static Deck deck, P1, P2;
         public static boolean running = false;
+        public JButton quitBTN;
+        public JPanel gameServerPanel;
+        
+        public GameServer(){
+	System.out.println("GameServerUI - Building");
+        
+        this.initializeComponents();
+	this.setVisible(true);
+        this.setSize(250,65);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        
+        System.out.println("GameServerUI - Running");
+        } // MainMenuUI : Constructor
+        
+        public void initializeComponents(){
+            setTitle("<< SPEED :: Server >>");
+            setLocationRelativeTo(null);
+            
+            gameServerPanel = new JPanel();
+            quitBTN = new JButton("Terminate Server");
+            gameServerPanel.add(quitBTN);
+            quitBTN.addActionListener(this);
+        
+            this.add(gameServerPanel);
+        }
         
 	public void run(){
         System.out.println("The Game Server is running.");
@@ -197,4 +229,12 @@ public class GameServer implements Runnable {
 		Thread thread = new Thread(a);
 		thread.start();
 	}
+    
+    public void actionPerformed(ActionEvent evt){
+        Object obj = evt.getSource();
+    
+        if(obj == quitBTN){
+            System.exit(0);
+        }
+    }
 }// GameServer
