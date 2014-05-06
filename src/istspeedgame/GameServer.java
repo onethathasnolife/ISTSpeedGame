@@ -108,6 +108,12 @@ public class GameServer implements Runnable {
                 if(deck.isGameFinished){
                 	tempDeck.isGameFinished = true;
                 }
+                if(!tempDeck.isClientConnected){
+                	deck.isClientConnected = false;
+                }
+                if(!deck.isClientConnected){
+                	tempDeck.isClientConnected = false;
+                }
                 if(tempDeck.changes > deck.changes){ //if more changes have occurred.
                 	
                 		deck.tableLeft = tempDeck.tableLeft;
