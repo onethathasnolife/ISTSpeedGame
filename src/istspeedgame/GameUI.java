@@ -217,12 +217,14 @@ public class GameUI extends JFrame implements ActionListener{
                 if(obj == Table_Mid[1]){
                     System.out.println("Swapping p1-0 mid1");
                     if(deck.swapCard(P1.hand.get(0),deck.tableMid.get(0),P1)){
+                    	deck.changes++;
                         Update();
                         System.out.println("Swapping p1-0 mid1");
                     }
                 }
                 else if(obj == Table_Mid[3]){
                     if(deck.swapCard(P1.hand.get(0),deck.tableMid.get(1),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
@@ -231,11 +233,13 @@ public class GameUI extends JFrame implements ActionListener{
                 System.out.println("P1 - 1");
                 if(obj == Table_Mid[1]){
                     if(deck.swapCard(P1.hand.get(1),deck.tableMid.get(0),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
                 else if(obj == Table_Mid[3]){
                     if(deck.swapCard(P1.hand.get(1),deck.tableMid.get(1),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
@@ -244,11 +248,13 @@ public class GameUI extends JFrame implements ActionListener{
                 System.out.println("P1 - 2");
                 if(obj == Table_Mid[1]){
                     if(deck.swapCard(P1.hand.get(2),deck.tableMid.get(0),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
                 else if(obj == Table_Mid[3]){
                     if(deck.swapCard(P1.hand.get(2),deck.tableMid.get(1),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
@@ -257,11 +263,13 @@ public class GameUI extends JFrame implements ActionListener{
                 System.out.println("P1 - 3");
                 if(obj == Table_Mid[1]){
                     if(deck.swapCard(P1.hand.get(3),deck.tableMid.get(0),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
                 else if(obj == Table_Mid[3]){
                     if(deck.swapCard(P1.hand.get(3),deck.tableMid.get(1),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
@@ -270,11 +278,13 @@ public class GameUI extends JFrame implements ActionListener{
                 System.out.println("P1 - 4");
                 if(obj == Table_Mid[1]){
                     if(deck.swapCard(P1.hand.get(4),deck.tableMid.get(0),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
                 else if(obj == Table_Mid[3]){
                     if(deck.swapCard(P1.hand.get(4),deck.tableMid.get(1),P1)){
+                    	deck.changes++;
                         Update();
                     }
                 }
@@ -354,10 +364,12 @@ public class GameUI extends JFrame implements ActionListener{
         // Swap Middle Cards
         if(obj == Table_Mid[0]){
             deck.swapMid(0);
+            deck.changes++;
             Update();
         }
         if(obj == Table_Mid[4]){
             deck.swapMid(4);
+            deck.changes++;
             Update();
         }
         
@@ -394,7 +406,9 @@ public class GameUI extends JFrame implements ActionListener{
     
     public void Update(){
         System.out.println("Updating UI");
-        deck.changes++;
+        
+        
+        
         for(int i = 0; i < P1.hand.size(); i++){
             P1_Hand_Icon[i] = new ImageIcon("img/"+P1.hand.get(i)+".png");
             P1_Hand[i].setIcon(P1_Hand_Icon[i]);
@@ -462,7 +476,8 @@ public class GameUI extends JFrame implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object obj = e.getSource();
-			 if(obj == tim){	
+			 if(obj == tim){
+				 Update();
 	        	  try {	
 	        		s = new Socket("localhost",5555);
 	      			OutputStream out = s.getOutputStream();
