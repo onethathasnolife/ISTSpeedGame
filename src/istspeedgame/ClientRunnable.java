@@ -39,7 +39,7 @@ public class ClientRunnable implements Runnable {
             
             GameUI game = new GameUI(client, a1); //Makes and throws the deck here, kinda makes client useless.
             System.out.println("Game Made");
-            game.initializeComponents();
+            //game.initializeComponents();
         }
         catch(IOException | ClassNotFoundException e){
         	e.getStackTrace();

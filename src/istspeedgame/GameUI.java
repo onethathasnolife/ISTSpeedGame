@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -381,6 +386,24 @@ public class GameUI extends JFrame implements ActionListener{
         Table_Mid[4].setText("tableRight ("+deck.tableRight.size()+")");
         
         this.repaint();
+        //Write
+        
+        try {
+			Socket s = new Socket("localhost",5555);
+			OutputStream out = s.getOutputStream();
+	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
+			ObjectOutput outs = new ObjectOutputStream(out);
+			ObjectInput ins = new ObjectInputStream(in);
+			outs.writeObject(deck);
+			deck = (Deck) ins.readObject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}      //'Cast' to Object outpost stream.
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 } // MainMenuUI

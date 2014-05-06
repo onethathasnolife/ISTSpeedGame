@@ -14,14 +14,15 @@ public class GameServer implements Runnable {
 	public static int currentConnections =0;
 	private static Object obj;
 	private static Object obj2;
+	private static Deck deck;
 	public void run(){
         System.out.println("The Game Server is running.");
         ServerSocket listener = null;
-        Deck a = new Deck(); //Server controls the new deck.
+        deck = new Deck(); //Server controls the new deck.
         try {
             listener = new ServerSocket(PORT);
             while (true) {
-                new Handler(listener.accept(), a, currentConnections).start(); //Starts the handler which does the work
+                new Handler(listener.accept(), deck, currentConnections).start(); //Starts the handler which does the work
             } // while : true
         }
         catch(IOException e){
@@ -59,14 +60,24 @@ public class GameServer implements Runnable {
         // Create character streams for the socket.
     	System.out.println("Made it here running");
         try {
+        	//GameObjectHandler game = new GameObjectHandler(a);
+        	
             is = socket.getInputStream();
             oi = new ObjectInputStream(is); //Here for little reason but keep this
-            //int c = (int) oi.readObject();
             GameServer.currentConnections++;
-            //Object temp = oi.readObject(); // When we want to read the object sent
+            
+            
+            
+            
+            
+            
             outs = socket.getOutputStream();
             out = new ObjectOutputStream(outs);
             
+            
+            /*
+             * Dont doubt the logic here, for some reason on first connect it numerates by a few.
+             */
         	if(connectionNumber <= 2){ //First connection gets this.
         		System.out.println("3 or less");
         		GameServer.obj = a.P2; //Takes snapshot of the deck
@@ -74,14 +85,18 @@ public class GameServer implements Runnable {
         		out.writeObject(a); //sends object through output stream.
         		       		 
         	}
-        	else if(connectionNumber >= 3){ //Switches the deck.
+        	else if(connectionNumber >= 3 && connectionNumber < 5){ //Switches the deck.
         		a.P1 = (ArrayList<Card>) GameServer.obj; //Switches the deck. 
         		a.P2 = (ArrayList<Card>) GameServer.obj2;
         		System.out.println("6 or more");
         		out.writeObject(a); //sends object through output stream.
         	}
         	else{
-        		System.out.println("We Require more Decks to Continue, More than 2 Connections"); //Simple error log.
+        		Object temp = oi.readObject(); // When we want to read the object sent
+                a = (Deck) temp;
+                deck = a;
+        		out.writeObject(deck); //sends object through output stream.
+        		System.out.println("This one went through");
         	}
         	
         	
@@ -121,11 +136,11 @@ public class GameServer implements Runnable {
         }
         catch(IOException | InterruptedException e){ 
                e.printStackTrace();
-        } //catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
 
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		//}
+			e.printStackTrace();
+		}
     finally{
         	System.out.println("Made it here finally");
         }
