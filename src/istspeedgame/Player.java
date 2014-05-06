@@ -24,8 +24,8 @@ public class Player {
 		ObjectOutput obj = new ObjectOutputStream(os);      //'Cast' to Object outpost stream.
 		
 		
-		obj.writeObject(deck.get(0));
-		obj.flush(); 		//Something something writes A to output?
+		//obj.writeObject(deck.get(0));
+		//obj.flush(); 		//Something something writes A to output?
 		//obj.close();		// Similar thing to get stuff FUCK THIS LINE OF CODE HONESTLY ITS PISSES ME OFF.
 		/*ObjectInput objin = new ObjectInputStream(soc.getInputStream());
 		Object temp = null;

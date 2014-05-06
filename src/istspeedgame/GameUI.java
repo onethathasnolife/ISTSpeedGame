@@ -18,6 +18,10 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
+
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -48,11 +52,20 @@ public class GameUI extends JFrame implements ActionListener{
     Player P2;
     Client client;
     
+    Socket s;
+    boolean gameRunning;
+    ObjectOutput outs;
+    ObjectInput ins;
+    Timer tim;
+    int seconds;
+    int player;
+    
     ImageIcon[] P1_Hand_Icon = new ImageIcon[5];
     ImageIcon[] P2_Hand_Icon = new ImageIcon[5];
     ImageIcon Mid_1, Mid_2;
     
     public GameUI(Client client, Deck a){
+    	gameRunning = false;
     	System.out.println("GameUI - Building");
     	 this.client = client;
     	/*try {
@@ -78,8 +91,14 @@ public class GameUI extends JFrame implements ActionListener{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.pack();
-    
+        tim = new Timer(1000,this);
+        tim.addActionListener(this);
+        deck.player = player;
         System.out.println("GameUI - Running");
+        
+        
+        
+        
       
     } // GameUI : Constructor
 
@@ -341,7 +360,46 @@ public class GameUI extends JFrame implements ActionListener{
         if(obj == restartBTN){
             this.dispose();
         }
-        
+        if(obj == P1_Deck || obj == P2_Deck){
+        	try {
+    			s = new Socket("localhost",5555);
+    			OutputStream out = s.getOutputStream();
+    	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
+    			outs = new ObjectOutputStream(out);
+    			ins = new ObjectInputStream(in);
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}      //'Cast' to Object outpost stream.
+        	tim.start();
+        	this.Update();
+        }
+        if(obj == tim){
+        	
+        	  try {	
+        		s = new Socket("localhost",5555);
+      			OutputStream out = s.getOutputStream();
+      	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
+      			outs = new ObjectOutputStream(out);
+      			ins = new ObjectInputStream(in);
+      			outs.writeObject(deck);
+      			deck = (Deck) ins.readObject();
+      			if(deck.player != player){
+      				Object temp = deck.P1; 
+      				deck.P1 = deck.P2;
+      				deck.P2 = (ArrayList<Card>) temp;
+      			}
+      		} catch (IOException e) {
+      			// TODO Auto-generated catch block
+      			e.printStackTrace();
+      		} catch (ClassNotFoundException e) {
+      			// TODO Auto-generated catch block
+      			e.printStackTrace();
+      		}
+        	seconds++;
+        	timer.setText("Time: " + seconds);
+        }
         // if : quit
         if(obj == quitBTN){
             System.exit(0);
@@ -387,23 +445,32 @@ public class GameUI extends JFrame implements ActionListener{
         
         this.repaint();
         //Write
-        
         try {
-			Socket s = new Socket("localhost",5555);
+			s = new Socket("localhost",5555);
 			OutputStream out = s.getOutputStream();
 	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
-			ObjectOutput outs = new ObjectOutputStream(out);
-			ObjectInput ins = new ObjectInputStream(in);
-			outs.writeObject(deck);
-			deck = (Deck) ins.readObject();
+			outs = new ObjectOutputStream(out);
+			ins = new ObjectInputStream(in);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}      //'Cast' to Object outpost stream.
-		catch (ClassNotFoundException e) {
+        try {
+			outs.writeObject(deck);
+			deck = (Deck) ins.readObject();
+  			if(deck.player != player){
+  				deck.P1 = deck.P2;
+  			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+        
     }
 
 } // MainMenuUI

@@ -82,6 +82,7 @@ public class GameServer implements Runnable {
         		System.out.println("3 or less");
         		GameServer.obj = a.P2; //Takes snapshot of the deck
         		GameServer.obj2 = a.P1;
+        		a.player=1; //sets player based on what came first
         		out.writeObject(a); //sends object through output stream.
         		       		 
         	}
@@ -89,12 +90,13 @@ public class GameServer implements Runnable {
         		a.P1 = (ArrayList<Card>) GameServer.obj; //Switches the deck. 
         		a.P2 = (ArrayList<Card>) GameServer.obj2;
         		System.out.println("6 or more");
+        		a.player=2; //sets player based on what came first
         		out.writeObject(a); //sends object through output stream.
         	}
         	else{
         		Object temp = oi.readObject(); // When we want to read the object sent
                 a = (Deck) temp;
-                deck = a;
+                deck = a; //Specifically writes deck not A.
         		out.writeObject(deck); //sends object through output stream.
         		System.out.println("This one went through");
         	}
@@ -142,7 +144,7 @@ public class GameServer implements Runnable {
 			e.printStackTrace();
 		}
     finally{
-        	System.out.println("Made it here finally");
+        	System.out.println("Made it here finally"); //shouldent happen but if something didnt go working and still or the loop doesnt propigate.
         }
         }// run
     }// Handler
