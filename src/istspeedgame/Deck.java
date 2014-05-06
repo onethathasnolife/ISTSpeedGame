@@ -79,7 +79,9 @@ public class Deck implements Serializable{
             // Check for null cards
             for(int i = 0; i < player.hand.size(); i++){
                 if(player.hand.get(i) == null){
+                    System.out.println("Hand size (before): "+player.hand.size());
                     player.hand.remove(i);
+                    System.out.println("Hand size (after): "+player.hand.size());
                 } // if : card is null, remove
             } // for : player hand
             

@@ -409,7 +409,7 @@ public class GameUI extends JFrame implements ActionListener{
     }
     
     public void Update(){
-        System.out.println("Updating UI");
+        //System.out.println("Updating UI");
         
         tim.setDelay(250);
         
@@ -422,16 +422,18 @@ public class GameUI extends JFrame implements ActionListener{
             P2_Hand[i].setIcon(P2_Hand_Icon[i]);
         }
         if(P1.deck.isEmpty()){
-            for(int i = deck.P1_Hand.size(); i < 5; i++){
-                System.out.println(deck.P1_Hand.size());
-                P2_Hand_Icon[i] = new ImageIcon("img/x.png");
+            System.out.println("Deck Empty");
+            System.out.println("Hand size: "+P1.hand.size());
+            for(int i = P1.hand.size(); i < 5; i++){
+                P1_Hand_Icon[i] = new ImageIcon();
                 P1_Hand[i].setIcon(P1_Hand_Icon[i]);
             }
         }
         if(P2.deck.isEmpty()){
-            for(int i = deck.P2_Hand.size(); i < 5; i++){
-                System.out.println(deck.P2_Hand.size());
-                P2_Hand_Icon[i] = new ImageIcon("img/x.png");
+            System.out.println("Deck Empty");
+            System.out.println("Hand size: "+P2.hand.size());
+            for(int i = P2.hand.size(); i < 5; i++){
+                P2_Hand_Icon[i] = new ImageIcon();
                 P2_Hand[i].setIcon(P2_Hand_Icon[i]);
             }
         }
