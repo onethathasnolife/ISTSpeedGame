@@ -394,6 +394,7 @@ public class GameUI extends JFrame implements ActionListener{
     
     public void Update(){
         System.out.println("Updating UI");
+        deck.changes++;
         for(int i = 0; i < P1.hand.size(); i++){
             P1_Hand_Icon[i] = new ImageIcon("img/"+P1.hand.get(i)+".png");
             P1_Hand[i].setIcon(P1_Hand_Icon[i]);

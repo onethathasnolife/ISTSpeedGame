@@ -18,7 +18,7 @@ public class Deck implements Serializable{
     ArrayList<Card> P2_Hand = new ArrayList<>();
 	LinkedList<Card> deck = new LinkedList<Card>();
 	
-	int player;
+	int player,changes = 0;
 	
 	public Deck() {
 		int counter = 0;

@@ -14,7 +14,7 @@ public class GameServer implements Runnable {
 	public static int currentConnections =0;
 	private static Object obj;
 	private static Object obj2;
-	private static Deck deck;
+	private static Deck deck, P1, P2;
         public static boolean running = false;
         
 	public void run(){
@@ -49,7 +49,7 @@ public class GameServer implements Runnable {
         private InputStream is;
         private ObjectOutputStream out;
         private OutputStream outs;
-        private Deck a;
+        private Deck a, tempDeck;
         private int connectionNumber;
         
 
@@ -87,6 +87,7 @@ public class GameServer implements Runnable {
         		GameServer.obj = a.P2; //Takes snapshot of the deck
         		GameServer.obj2 = a.P1;
         		a.player=1; //sets player based on what came first
+        		GameServer.P1 = a;
         		out.writeObject(a); //sends object through output stream.
         		       		 
         	}
@@ -95,15 +96,40 @@ public class GameServer implements Runnable {
         		a.P2 = (ArrayList<Card>) GameServer.obj2;
         		System.out.println("6 or more");
         		a.player=2; //sets player based on what came first
+        		GameServer.P2 = a;
         		out.writeObject(a); //sends object through output stream.
         	}
         	else{
         		Object temp = oi.readObject(); // When we want to read the object sent
-                a = (Deck) temp;
-                deck = a; //Specifically writes deck not A.
-        		out.writeObject(deck); //sends object through output stream.
-        		System.out.println("This one went through");
-        	}
+                tempDeck = (Deck) temp;
+                if(tempDeck.changes > deck.changes){ //if more changes have occurred.
+                	
+                		deck.tableLeft = tempDeck.tableLeft;
+	                	deck.tableRight = tempDeck.tableRight; //switch the stuff in the middle.
+	                	deck.tableMid = tempDeck.tableMid;
+	                	
+	                	deck.changes = tempDeck.changes; // Update change counter.
+	                	
+	                	
+	                	out.writeObject(tempDeck); //send it back
+	                	
+	                	}
+                if(deck.changes > tempDeck.changes){ //If the deck is currently ahead of the deck inside
+                	tempDeck.tableLeft = deck.tableLeft;
+                	tempDeck.tableRight = deck.tableRight;   //switch the stuff in the middle.
+                	tempDeck.tableMid = deck.tableMid;
+                	
+                	tempDeck.changes = deck.changes;
+                	
+                	out.writeObject(tempDeck);
+                	}
+                else{ //if equal do nothing just write the deck.
+                	out.writeObject(tempDeck);
+                }
+                	
+                }
+               
+        	
         	
         	
             
@@ -112,9 +138,9 @@ public class GameServer implements Runnable {
            
             out.flush();
             //out.close();
-            while(true){
+            /*while(true){
             	sleep(50);
-            }
+            }*/
 
             /*try { 
             	while(true){
@@ -140,7 +166,7 @@ public class GameServer implements Runnable {
             
         
         }
-        catch(IOException | InterruptedException e){ 
+        catch(IOException e){ 
                e.printStackTrace();
         } catch (ClassNotFoundException e) {
 
