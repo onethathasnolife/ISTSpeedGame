@@ -46,7 +46,7 @@ public class GameUI extends JFrame implements ActionListener{
     JButton mainMenuBTN;
     JButton quitBTN;
     JButton restartBTN;
-    //JLabel timer;
+    JLabel timer;
     Deck deck;
     Player P1;
     Player P2;
@@ -56,7 +56,7 @@ public class GameUI extends JFrame implements ActionListener{
     boolean gameRunning;
     ObjectOutput outs;
     ObjectInput ins;
-    //Timer tim;
+    Timer tim;
     int seconds;
     int player;
     
@@ -91,8 +91,8 @@ public class GameUI extends JFrame implements ActionListener{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.pack();
-        //tim = new Timer(1000,this);
-        //tim.addActionListener(this);
+        tim = new Timer(1000,this);
+        tim.addActionListener(new timerListener());
         deck.player = player;
         System.out.println("GameUI - Running");
         
@@ -446,5 +446,38 @@ public class GameUI extends JFrame implements ActionListener{
 		
         
     }
+    public class timerListener implements ActionListener{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object obj = e.getSource();
+			 if(obj == tim){
+		        	
+	        	  try {	
+	        		s = new Socket("localhost",5555);
+	      			OutputStream out = s.getOutputStream();
+	      	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
+	      			outs = new ObjectOutputStream(out);
+	      			ins = new ObjectInputStream(in);
+	      			outs.writeObject(deck);
+	      			deck = (Deck) ins.readObject();
+	      			if(deck.player != player){
+	      				Object temp = deck.P1; 
+	      				deck.P1 = deck.P2;
+	      				deck.P2 = (ArrayList<Card>) temp;
+	      			}
+	      		} catch (IOException e1) {
+	      			// TODO Auto-generated catch block
+	      			e1.printStackTrace();
+	      		} catch (ClassNotFoundException e1) {
+	      			// TODO Auto-generated catch block
+	      			e1.printStackTrace();
+	      		}
+	        	seconds++;
+	        	timer.setText("Time: " + seconds);
+	        }
+			
+		}
+    	
+    }
 } // MainMenuUI
