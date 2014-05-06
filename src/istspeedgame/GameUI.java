@@ -410,6 +410,7 @@ public class GameUI extends JFrame implements ActionListener{
     
     public void endGame(String player){
         JOptionPane.showMessageDialog(this, "Player "+player+" has won!");
+        deck.isGameFinished = true;
         tim.stop();
         this.dispose();
     }
@@ -487,6 +488,7 @@ public class GameUI extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(this, "Client Disconnected");
 		}
 		if(deck.isGameFinished){
+			tim.stop();
 			this.dispose();
 			JOptionPane.showMessageDialog(this, "Game Over");
 		}
