@@ -41,12 +41,12 @@ public class GameUI extends JFrame implements ActionListener{
     JButton[] P1_Hand;
     JButton[] P2_Hand;
     JButton[] Table_Mid;
-    JButton P1_Deck;
-    JButton P2_Deck;
+    JLabel P1_Deck;
+    JLabel P2_Deck;
     JButton mainMenuBTN;
     JButton quitBTN;
     JButton restartBTN;
-    JLabel timer;
+    //JLabel timer;
     Deck deck;
     Player P1;
     Player P2;
@@ -56,7 +56,7 @@ public class GameUI extends JFrame implements ActionListener{
     boolean gameRunning;
     ObjectOutput outs;
     ObjectInput ins;
-    Timer tim;
+    //Timer tim;
     int seconds;
     int player;
     
@@ -91,8 +91,8 @@ public class GameUI extends JFrame implements ActionListener{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.pack();
-        tim = new Timer(1000,this);
-        tim.addActionListener(this);
+        //tim = new Timer(1000,this);
+        //tim.addActionListener(this);
         deck.player = player;
         System.out.println("GameUI - Running");
         
@@ -119,8 +119,8 @@ public class GameUI extends JFrame implements ActionListener{
         P2_Hand = new JButton[5];
         Table_Mid = new JButton[5];
         
-        P1_Deck = new JButton("P1 Library ("+P1.deck.size()+")");
-        P2_Deck = new JButton("P2 Library ("+P2.deck.size()+")");
+        P1_Deck = new JLabel("P1 Library ("+P1.deck.size()+")");
+        P2_Deck = new JLabel("P2 Library ("+P2.deck.size()+")");
 
         Mid_1 = new ImageIcon("img/" + deck.tableMid.get(0) + ".png");
         Mid_2 = new ImageIcon("img/" + deck.tableMid.get(1) + ".png");
@@ -177,15 +177,13 @@ public class GameUI extends JFrame implements ActionListener{
         optionsPanel.add(mainMenuBTN);       
         optionsPanel.add(restartBTN);
         optionsPanel.add(quitBTN);
-        timer = new JLabel("Time: 00:00");
-        optionsPanel.add(timer);
+        //timer = new JLabel("Time: 00:00");
+        //optionsPanel.add(timer);
         
         P1_Panel.add(new JLabel(""));
         P2_Panel.add(new JLabel(""));
         P1_Panel.add(P1_Deck);
         P2_Panel.add(P2_Deck);
-        P1_Deck.addActionListener(this);
-        P2_Deck.addActionListener(this);
         mainMenuBTN.addActionListener(this);
         quitBTN.addActionListener(this);
         restartBTN.addActionListener(this);
@@ -372,34 +370,10 @@ public class GameUI extends JFrame implements ActionListener{
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}      //'Cast' to Object outpost stream.
-        	tim.start();
+        	//tim.start();
         	this.Update();
         }
-        if(obj == tim){
-        	
-        	  try {	
-        		s = new Socket("localhost",5555);
-      			OutputStream out = s.getOutputStream();
-      	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
-      			outs = new ObjectOutputStream(out);
-      			ins = new ObjectInputStream(in);
-      			outs.writeObject(deck);
-      			deck = (Deck) ins.readObject();
-      			if(deck.player != player){
-      				Object temp = deck.P1; 
-      				deck.P1 = deck.P2;
-      				deck.P2 = (ArrayList<Card>) temp;
-      			}
-      		} catch (IOException e) {
-      			// TODO Auto-generated catch block
-      			e.printStackTrace();
-      		} catch (ClassNotFoundException e) {
-      			// TODO Auto-generated catch block
-      			e.printStackTrace();
-      		}
-        	seconds++;
-        	timer.setText("Time: " + seconds);
-        }
+        
         // if : quit
         if(obj == quitBTN){
             System.exit(0);
