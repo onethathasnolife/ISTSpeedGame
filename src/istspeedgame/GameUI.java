@@ -8,6 +8,16 @@ package istspeedgame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -42,15 +52,27 @@ public class GameUI extends JFrame implements ActionListener{
     ImageIcon[] P2_Hand_Icon = new ImageIcon[5];
     ImageIcon Mid_1, Mid_2;
     
-    public GameUI(Client client){
+    public GameUI(Client client, Deck a){
     	System.out.println("GameUI - Building");
-        
-        this.client = client;
+    	 this.client = client;
+    	/*try {
+			ObjectInput in = new ObjectInputStream(client.getIn());
+			deck = (Deck) in.readObject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+    	deck = a;
+    	
+       
         P1 = new Player(deck.P1, deck.P1_Hand);
         P2 = new Player(deck.P2, deck.P2_Hand);
         deck.updateHand(P1);
         deck.updateHand(P2);
-        
+       
         this.initializeComponents();
         this.setVisible(true);
         this.setResizable(false);
@@ -364,6 +386,24 @@ public class GameUI extends JFrame implements ActionListener{
         Table_Mid[4].setText("tableRight ("+deck.tableRight.size()+")");
         
         this.repaint();
+        //Write
+        
+        try {
+			Socket s = new Socket("localhost",5555);
+			OutputStream out = s.getOutputStream();
+	        InputStream in = s.getInputStream();//Setup Output Stream In reality this doesnt need to be here.
+			ObjectOutput outs = new ObjectOutputStream(out);
+			ObjectInput ins = new ObjectInputStream(in);
+			outs.writeObject(deck);
+			deck = (Deck) ins.readObject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}      //'Cast' to Object outpost stream.
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 } // MainMenuUI
