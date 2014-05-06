@@ -93,6 +93,7 @@ public class GameUI extends JFrame implements ActionListener{
         this.pack();
         tim = new Timer(1000,this);
         tim.addActionListener(new timerListener());
+        tim.start();
         deck.player = player;
         System.out.println("GameUI - Running");
         
@@ -177,8 +178,8 @@ public class GameUI extends JFrame implements ActionListener{
         optionsPanel.add(mainMenuBTN);       
         optionsPanel.add(restartBTN);
         optionsPanel.add(quitBTN);
-        //timer = new JLabel("Time: 00:00");
-        //optionsPanel.add(timer);
+        timer = new JLabel("Time: 00:00");
+        optionsPanel.add(timer);
         
         P1_Panel.add(new JLabel(""));
         P2_Panel.add(new JLabel(""));
@@ -203,7 +204,9 @@ public class GameUI extends JFrame implements ActionListener{
         Object obj = evt.getSource();
     
         // Swap cards
-        System.out.println("Last Action: "+lastAction);
+        
+        if(lastAction != tim){
+            //System.out.println("Last Action: "+lastAction);
         if(obj == Table_Mid[1] || obj == Table_Mid[3]){
             
             //******************************************************************
@@ -212,8 +215,10 @@ public class GameUI extends JFrame implements ActionListener{
             if(lastAction == P1_Hand[0]){
                 System.out.println("P1 - 0");
                 if(obj == Table_Mid[1]){
+                    System.out.println("Swapping p1-0 mid1");
                     if(deck.swapCard(P1.hand.get(0),deck.tableMid.get(0),P1)){
                         Update();
+                        System.out.println("Swapping p1-0 mid1");
                     }
                 }
                 else if(obj == Table_Mid[3]){
@@ -344,6 +349,7 @@ public class GameUI extends JFrame implements ActionListener{
                 }
             }
         }
+        }
         
         // Swap Middle Cards
         if(obj == Table_Mid[0]){
@@ -370,8 +376,7 @@ public class GameUI extends JFrame implements ActionListener{
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}      //'Cast' to Object outpost stream.
-        	//tim.start();
-        	this.Update();
+        	
         }
         
         // if : quit
@@ -382,10 +387,13 @@ public class GameUI extends JFrame implements ActionListener{
         	this.dispose();
         }
         
-        lastAction = obj;
+        if(obj != tim){
+            lastAction = obj;
+        }
     }
     
     public void Update(){
+        System.out.println("Updating UI");
         for(int i = 0; i < P1.hand.size(); i++){
             P1_Hand_Icon[i] = new ImageIcon("img/"+P1.hand.get(i)+".png");
             P1_Hand[i].setIcon(P1_Hand_Icon[i]);
@@ -394,14 +402,16 @@ public class GameUI extends JFrame implements ActionListener{
             P2_Hand_Icon[i] = new ImageIcon("img/"+P2.hand.get(i)+".png");
             P2_Hand[i].setIcon(P2_Hand_Icon[i]);
         }
-        if(P1.hand.isEmpty()){
+        if(P1.deck.isEmpty()){
             for(int i = deck.P1_Hand.size(); i < 5; i++){
-                P1_Hand_Icon[i] = new ImageIcon("img/x.png");
+                System.out.println(deck.P1_Hand.size());
+                P2_Hand_Icon[i] = new ImageIcon("img/x.png");
                 P1_Hand[i].setIcon(P1_Hand_Icon[i]);
             }
         }
         if(P2.deck.isEmpty()){
             for(int i = deck.P2_Hand.size(); i < 5; i++){
+                System.out.println(deck.P2_Hand.size());
                 P2_Hand_Icon[i] = new ImageIcon("img/x.png");
                 P2_Hand[i].setIcon(P2_Hand_Icon[i]);
             }
@@ -417,7 +427,7 @@ public class GameUI extends JFrame implements ActionListener{
         Table_Mid[0].setText("tableLeft ("+deck.tableLeft.size()+")");
         Table_Mid[4].setText("tableRight ("+deck.tableRight.size()+")");
         
-        //this.repaint();
+        
         //Write
         try {
 			s = new Socket("localhost",5555);
@@ -451,8 +461,7 @@ public class GameUI extends JFrame implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object obj = e.getSource();
-			 if(obj == tim){
-		        System.out.println("timer");	
+			 if(obj == tim){	
 	        	  try {	
 	        		s = new Socket("localhost",5555);
 	      			OutputStream out = s.getOutputStream();

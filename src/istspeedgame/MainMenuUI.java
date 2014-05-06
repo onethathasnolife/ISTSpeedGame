@@ -72,7 +72,7 @@ public class MainMenuUI extends JFrame implements ActionListener{
         Object obj = evt.getSource();
     
         if(obj == hostBTN){
-            JOptionPane.showMessageDialog(mainMenuPanel, "Game Server Started");
+            JOptionPane.showMessageDialog(mainMenuPanel, "Starting server.");
             GameServer gs = new GameServer();
             Thread server = new Thread(gs);
             server.start();

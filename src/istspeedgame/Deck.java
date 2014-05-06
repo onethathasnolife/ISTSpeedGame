@@ -78,7 +78,6 @@ public class Deck implements Serializable{
             for(int i = 0; i < player.hand.size(); i++){
                 if(player.hand.get(i) == null){
                     player.hand.remove(i);
-                    updateHand(player);
                 } // if : card is null, remove
             } // for : player hand
             
@@ -90,13 +89,10 @@ public class Deck implements Serializable{
                     player.deck.remove(0);
                     success = true;
                 } // if : deck not empty
-                else{
-                    System.out.println("Deck Empty");
-                } // else: deck empty
             } // while : hand not full
             
             if(player.deck.isEmpty()){
-                
+                success = true;
             }
             
             return success;
@@ -124,10 +120,8 @@ public class Deck implements Serializable{
                 else if(toReplace == this.tableMid.get(1)){
                     this.tableMid.set(1, toSwap);
                 }
-                if(!player.deck.isEmpty()){
-                    if(updateHand(player)){
-                        success = true;
-                    }
+                if(updateHand(player)){
+                    success = true;
                 }
             }
             
