@@ -102,6 +102,12 @@ public class GameServer implements Runnable {
         	else{
         		Object temp = oi.readObject(); // When we want to read the object sent
                 tempDeck = (Deck) temp;
+                if(tempDeck.isGameFinished){
+                	deck.isGameFinished = true;
+                }
+                if(deck.isGameFinished){
+                	tempDeck.isGameFinished = true;
+                }
                 if(tempDeck.changes > deck.changes){ //if more changes have occurred.
                 	
                 		deck.tableLeft = tempDeck.tableLeft;
@@ -118,6 +124,8 @@ public class GameServer implements Runnable {
                 	tempDeck.tableLeft = deck.tableLeft;
                 	tempDeck.tableRight = deck.tableRight;   //switch the stuff in the middle.
                 	tempDeck.tableMid = deck.tableMid;
+                	
+                	
                 	
                 	tempDeck.changes = deck.changes;
                 	

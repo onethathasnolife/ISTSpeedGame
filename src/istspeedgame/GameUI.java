@@ -51,6 +51,7 @@ public class GameUI extends JFrame implements ActionListener{
     Player P1;
     Player P2;
     Client client;
+    WindowEvent closingEvent;
     
     Socket s;
     boolean gameRunning;
@@ -85,7 +86,10 @@ public class GameUI extends JFrame implements ActionListener{
         P2 = new Player(deck.P2, deck.P2_Hand);
         deck.updateHand(P1);
         deck.updateHand(P2);
-       
+        
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        
         this.initializeComponents();
         this.setVisible(true);
         this.setResizable(false);
@@ -407,7 +411,7 @@ public class GameUI extends JFrame implements ActionListener{
     public void Update(){
         //System.out.println("Updating UI");
         
-        tim.setDelay(1000);
+        tim.setDelay(250);
         
         for(int i = 0; i < P1.hand.size(); i++){
             P1_Hand_Icon[i] = new ImageIcon("img/"+P1.hand.get(i)+".png");
@@ -466,7 +470,14 @@ public class GameUI extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		if(!deck.isClientConnected){
+			this.dispose();
+			JOptionPane.showMessageDialog(this, "Client Disconnected");
+		}
+		if(deck.isGameFinished){
+			this.dispose();
+			JOptionPane.showMessageDialog(this, "Game Over");
+		}
         
     }
     public class timerListener implements ActionListener{

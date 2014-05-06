@@ -19,6 +19,8 @@ public class Deck implements Serializable{
 	LinkedList<Card> deck = new LinkedList<Card>();
 	
 	int player,changes = 0;
+	boolean isGameFinished = false;
+	boolean isClientConnected = true;
 	
 	public Deck() {
 		int counter = 0;
