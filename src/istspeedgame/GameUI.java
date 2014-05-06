@@ -91,7 +91,7 @@ public class GameUI extends JFrame implements ActionListener{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.pack();
-        tim = new Timer(1000,this);
+        tim = new Timer(5000,this);
         tim.addActionListener(new timerListener());
         tim.start();
         deck.player = player;
@@ -407,7 +407,7 @@ public class GameUI extends JFrame implements ActionListener{
     public void Update(){
         System.out.println("Updating UI");
         
-        
+        tim.setDelay(1000);
         
         for(int i = 0; i < P1.hand.size(); i++){
             P1_Hand_Icon[i] = new ImageIcon("img/"+P1.hand.get(i)+".png");
