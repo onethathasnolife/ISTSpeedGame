@@ -102,12 +102,10 @@ public class Deck implements Serializable{
             boolean success = false;
             
             // Possible replacements +/- 1 rank or Ace/2
-            if(
-                toSwap.getRank() - toReplace.getRank() == 1 || 
-                toSwap.getRank() - toReplace.getRank() == -1 || 
-                toSwap.getRank() - toReplace.getRank() == 12 ||  
-                toSwap.getRank() - toReplace.getRank() == -12)
-            {
+            int difference = toSwap.getRank() - toReplace.getRank();
+            System.out.println("Diff: "+difference);
+            if(difference == 1 || difference == -1 || difference == 12 ||  difference == -12){
+                
                 System.out.println("Swapping "+toReplace.toString()+" with "+toSwap.toString());
                 for(int i = 0; i < player.hand.size(); i++){
                     if(player.hand.get(i) == toSwap){
