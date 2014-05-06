@@ -78,6 +78,7 @@ public class Deck implements Serializable{
             for(int i = 0; i < player.hand.size(); i++){
                 if(player.hand.get(i) == null){
                     player.hand.remove(i);
+                    updateHand(player);
                 } // if : card is null, remove
             } // for : player hand
             
@@ -91,9 +92,12 @@ public class Deck implements Serializable{
                 } // if : deck not empty
                 else{
                     System.out.println("Deck Empty");
-                    success = true;
                 } // else: deck empty
             } // while : hand not full
+            
+            if(player.deck.isEmpty()){
+                
+            }
             
             return success;
         }
@@ -102,14 +106,16 @@ public class Deck implements Serializable{
             boolean success = false;
             
             // Possible replacements +/- 1 rank or Ace/2
-            int difference = toSwap.getRank() - toReplace.getRank();
-            System.out.println("Diff: "+difference);
-            if(difference == 1 || difference == -1 || difference == 12 ||  difference == -12){
-                
+            if(
+                toSwap.getRank() - toReplace.getRank() == 1 || 
+                toSwap.getRank() - toReplace.getRank() == -1 || 
+                toSwap.getRank() - toReplace.getRank() == 12 ||  
+                toSwap.getRank() - toReplace.getRank() == -12)
+            {
                 System.out.println("Swapping "+toReplace.toString()+" with "+toSwap.toString());
                 for(int i = 0; i < player.hand.size(); i++){
                     if(player.hand.get(i) == toSwap){
-                        player.hand.remove(i);
+                        player.hand.set(i, null);
                     }
                 }
                 if(toReplace == this.tableMid.get(0)){
@@ -118,8 +124,10 @@ public class Deck implements Serializable{
                 else if(toReplace == this.tableMid.get(1)){
                     this.tableMid.set(1, toSwap);
                 }
-                if(updateHand(player)){
-                    success = true;
+                if(!player.deck.isEmpty()){
+                    if(updateHand(player)){
+                        success = true;
+                    }
                 }
             }
             

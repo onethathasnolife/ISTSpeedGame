@@ -19,7 +19,7 @@ public class GameServer implements Runnable {
         
 	public void run(){
         System.out.println("The Game Server is running.");
-        
+       
         ServerSocket listener = null;
         deck = new Deck(); //Server controls the new deck.
         try {
@@ -65,7 +65,7 @@ public class GameServer implements Runnable {
     	System.out.println("Made it here running");
         try {
         	//GameObjectHandler game = new GameObjectHandler(a);
-        	
+
             is = socket.getInputStream();
             oi = new ObjectInputStream(is); //Here for little reason but keep this
             GameServer.currentConnections++;
@@ -113,9 +113,7 @@ public class GameServer implements Runnable {
             out.flush();
             //out.close();
             while(true){
-            	sleep(150);
-            	//System.out.println("Made it here whiling");
-            	
+            	sleep(50);
             }
 
             /*try { 
@@ -139,6 +137,8 @@ public class GameServer implements Runnable {
             catch(ClassNotFoundException e){
                 e.printStackTrace();
             }*/
+            
+        
         }
         catch(IOException | InterruptedException e){ 
                e.printStackTrace();

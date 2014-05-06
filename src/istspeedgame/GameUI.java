@@ -417,7 +417,7 @@ public class GameUI extends JFrame implements ActionListener{
         Table_Mid[0].setText("tableLeft ("+deck.tableLeft.size()+")");
         Table_Mid[4].setText("tableRight ("+deck.tableRight.size()+")");
         
-        this.repaint();
+        //this.repaint();
         //Write
         try {
 			s = new Socket("localhost",5555);
@@ -452,7 +452,7 @@ public class GameUI extends JFrame implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			Object obj = e.getSource();
 			 if(obj == tim){
-		        	
+		        System.out.println("timer");	
 	        	  try {	
 	        		s = new Socket("localhost",5555);
 	      			OutputStream out = s.getOutputStream();
