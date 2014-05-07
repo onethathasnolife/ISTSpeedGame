@@ -7,7 +7,9 @@
 package istspeedgame;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 /**
@@ -36,6 +38,14 @@ public class ClientConnection {
             System.err.println("UnknownHostException: "+e.getMessage());
             System.exit(-1);
         } // catch
+        catch(ConnectException e){
+            System.out.println("Server disconnected.");
+            System.exit(0);
+        }
+        catch(SocketException e){
+            System.out.println("Server disconnected.");
+            System.exit(0);
+        }
         catch(IOException e){
             System.err.println("IOException: "+e.getMessage());
             System.exit(-1);

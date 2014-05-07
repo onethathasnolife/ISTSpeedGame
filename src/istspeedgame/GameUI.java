@@ -15,7 +15,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 
@@ -466,7 +468,19 @@ public class GameUI extends JFrame implements ActionListener{
 			outs = new ObjectOutputStream(out);
 			ins = new ObjectInputStream(in);
 			
-		} catch (IOException e) {
+		} 
+        catch(ConnectException e){
+            System.out.println("Server disconnected.");
+            JOptionPane.showMessageDialog(this, "Client Disconnected");
+            deck.isClientConnected = false;
+            System.exit(0);
+        }
+        catch(SocketException e){
+            System.out.println("Server disconnected.");
+            JOptionPane.showMessageDialog(this, "Client Disconnected");
+            deck.isClientConnected = false;
+            System.exit(0);
+        }catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}      //'Cast' to Object outpost stream.
@@ -476,7 +490,19 @@ public class GameUI extends JFrame implements ActionListener{
   			if(deck.player != player){
   				deck.P1 = deck.P2;
   			}
-		} catch (IOException e) {
+		} 
+        catch(ConnectException e){
+            System.out.println("Server disconnected.");
+            JOptionPane.showMessageDialog(this, "Client Disconnected");
+            deck.isClientConnected = false;
+            System.exit(0);
+        }
+        catch(SocketException e){
+            System.out.println("Server disconnected.");
+            JOptionPane.showMessageDialog(this, "Client Disconnected");
+            deck.isClientConnected = false;
+            System.exit(0);
+        }catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

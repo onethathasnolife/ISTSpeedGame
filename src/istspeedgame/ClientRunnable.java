@@ -7,7 +7,10 @@
 package istspeedgame;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,11 +44,20 @@ public class ClientRunnable implements Runnable {
             System.out.println("Game Made");
             //game.initializeComponents();
         }
+        catch(ConnectException e){
+            System.out.println("Server disconnected.");
+            System.exit(0);
+        }
+        catch(SocketException e){
+            System.out.println("Server disconnected.");
+            System.exit(0);
+        }
         catch(IOException | ClassNotFoundException e){
         	e.getStackTrace();
             //System.err.println("IOException: "+e.getMessage());
             System.exit(-1);
         }
+        
     }
     
 }
